@@ -634,6 +634,36 @@
 #adm .tg{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);margin-bottom:10px}#adm .tg input{width:auto;margin:0;accent-color:var(--amber)}
 #adm summary{cursor:pointer;font-size:13px;font-weight:600;padding:4px 0}
 
+.brand-mark{width:44px!important;height:44px!important}
+@media(min-width:640px){.brand-mark{width:54px!important;height:54px!important}}
+#adminView .sb-brand .brand-mark{width:42px!important;height:42px!important}
+.au-logo{display:flex;align-items:center;gap:10px}.au-logo .au-lg{width:46px!important;height:46px!important}
+.logo-custom img.brand-mark{object-fit:contain!important;border-radius:10px!important;border:0!important;background:transparent!important}
+#adminView .sb-back+.sb-back{display:none}
+#adminView .sb-foot{cursor:pointer;border-radius:10px;transition:background .15s}#adminView .sb-foot:hover{background:rgba(255,255,255,.07)}
+.acct{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--amber);background:var(--amber-10);color:var(--amber);font:600 12px 'IBM Plex Mono',monospace;cursor:pointer;flex-shrink:0}
+.acct:hover{background:var(--amber);color:#fff}
+#acctMenu{display:none;position:fixed;z-index:120;min-width:230px;background:var(--paper);color:var(--ink);border:1px solid var(--ink-10);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.25);padding:6px}
+#acctMenu .am-h{padding:10px 12px 12px;border-bottom:1px solid var(--ink-10);margin-bottom:4px}
+#acctMenu .am-h b{display:block;font-size:14px}#acctMenu .am-h small{display:block;font-size:12px;color:var(--graphite);margin:2px 0 6px;word-break:break-all}
+#acctMenu .am-h em{font:600 10px 'IBM Plex Mono',monospace;font-style:normal;background:var(--amber-10);color:var(--amber);padding:2px 8px;border-radius:100px}
+#acctMenu button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:13.5px inherit;font-family:inherit;padding:10px 12px;border-radius:8px;cursor:pointer}
+#acctMenu button:hover{background:var(--ink-10)}#acctMenu hr{border:0;border-top:1px solid var(--ink-10);margin:6px 0 4px}
+#acctMenu .red{color:#C83C3C;margin-top:14px}
+#ajMaint{position:fixed;inset:0;z-index:500;background:var(--paper);color:var(--ink);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px}
+#ajMaint h2{font-size:clamp(24px,5vw,38px);letter-spacing:-.02em;max-width:560px;margin-bottom:18px}#ajMaint a{font:12px 'IBM Plex Mono',monospace;color:var(--graphite);cursor:pointer;text-decoration:underline}
+#pm .cg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+#pm .ch0{font:600 11px 'IBM Plex Mono',monospace;color:var(--graphite);text-align:center;padding:6px}
+#pm .cd0{min-height:84px;border:1px solid var(--ink-10);border-radius:8px;padding:4px;overflow:hidden}
+#pm .cd0.td{border-color:var(--amber);background:var(--amber-10)}#pm .cd0>span{font:10px 'IBM Plex Mono',monospace;color:var(--graphite)}
+.ev{font-size:11.5px;padding:3px 6px;margin-top:3px;background:var(--ink-10);border-left:3px solid var(--amber);border-radius:4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.lt{color:#C83C3C}.ev small{color:var(--graphite)}
+.br{display:grid;grid-template-columns:minmax(80px,140px) 1fr 28px;gap:10px;align-items:center;font-size:12.5px;margin:8px 0}
+.bx{display:block;background:var(--ink-10);border-radius:4px;height:8px}.bx i{display:block;height:100%;border-radius:4px;background:var(--amber)}.br b{text-align:right}
+.st2 h4{font:600 11px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--graphite);margin-bottom:8px}
+.st2 .notes-card{margin-bottom:0}.st2{gap:16px}
+.client-row.cr:hover{background:var(--amber-10)}
+
 </style>
 </head>
 <body>
@@ -1287,32 +1317,64 @@ function seed(){
   mk(3,'0433/26','Inês Variege','Viatura pesada','Japão',L,'AS','media',[1,1,1,1,1,0])
  ]};
 }
-let S=null,UI={view:'board',q:'',own:'',sel:null,sort:'num',dir:1},undo=null;
+let S=null,UI={view:'board',q:'',own:'',sel:null,sort:'num',dir:1,flt:'',cal:new Date()},undo=null;
 try{S=await AJ_DB.load()}catch(e){alert('Não foi possível carregar os dados: '+e.message);return}
 if(!S)S=AJ_DB.demo?seed():{cols:[],items:[]};
 const save=()=>AJ_DB.save(S);
 const col=id=>S.cols.find(c=>c.id===id);
 const prog=i=>i.check.length?Math.round(i.check.filter(c=>c.d).length/i.check.length*100):0;
-const vis=()=>S.items.filter(i=>(!UI.own||i.owner===UI.own)&&(!UI.q||[i.client,i.num,i.cargo,i.from,i.to].join(' ').toLowerCase().includes(UI.q)));
+const done=i=>/conclu/i.test(col(i.col)?col(i.col).name:'');
+const vis=()=>S.items.filter(i=>(UI.flt=='arch'?i.arch:!i.arch)&&(UI.flt!='late'||late(i))&&(!UI.own||i.owner===UI.own)&&(!UI.q||[i.client,i.num,i.cargo,i.from,i.to,i.ref,i.cemail,(i.tags||[]).join(' ')].join(' ').toLowerCase().includes(UI.q)));
 const nextNum=()=>String(Math.max(0,...S.items.map(i=>parseInt(i.num)||0))+1).padStart(4,'0')+'/26';
-const log=(i,t,p)=>{i.log.unshift({t,d:stamp(),p:!!p})};
+const log=(i,t,p)=>{i.log.unshift({t,d:stamp(),p:!!p,ts:Date.now()})};
 const late=i=>i.due&&i.due<today()&&col(i.col)&&!/conclu/i.test(col(i.col).name);
 
 function card(i){const p=prog(i);return `<div class="k" draggable="true" data-id="${i.id}"><div class="qa"><button class="ib" data-a="dup" title="Duplicar">${ic('copy')}</button><button class="ib" data-a="del" title="Eliminar">${ic('trash')}</button></div>
 <b>${esc(i.client)||'Sem título'}</b><small>${esc(i.cargo)||'—'} · ${esc(i.from)||'?'} → ${esc(i.to)||'?'}</small>
-<div class="row"><span>Nº ${esc(i.num)}</span><span class="tag p-${i.prio}">${i.prio}</span>${i.due?`<span class="${late(i)?'late':''}">${ic('cal')} ${fmt(i.due)}</span>`:''}<span class="av">${esc(i.owner)||'—'}</span></div>
+${(i.tags||[]).length?`<div class="row" style="margin:-4px 0 8px">${i.tags.map(t=>`<span class="tag p-media">${esc(t)}</span>`).join('')}</div>`:''}<div class="row"><span>Nº ${esc(i.num)}</span><span class="tag p-${i.prio}">${i.prio}</span>${i.due?`<span class="${late(i)?'late':''}">${ic('cal')} ${fmt(i.due)}</span>`:''}<span class="av">${esc(i.owner)||'—'}</span></div>
 <div class="bar"><i style="width:${p}%"></i></div></div>`}
 function board(){const v=vis();return `<div class="bd">`+S.cols.map(c=>{const its=v.filter(i=>i.col===c.id);return `<div class="cl" data-c="${c.id}"><div class="ch"><span class="dot" data-a="color" style="background:${c.color}" title="Mudar cor"></span><input class="cn" value="${esc(c.name)}" data-a="ren"><span class="cc">${its.length}</span><button class="ib" data-a="delcol" title="Eliminar coluna">${ic('x')}</button></div><div class="cs">${its.map(card).join('')||'<div class="empty">Arraste um processo para aqui</div>'}</div><button class="add" data-a="add">${ic('plus')} Novo processo</button></div>`}).join('')+`<div class="cl"><button class="ghost" data-a="addcol">${ic('plus')} Nova coluna</button></div></div>`}
 function table(){const k=UI.sort,rows=vis().slice().sort((a,b)=>{const g=i=>k==='col'?col(i.col)?.name:k==='prog'?prog(i):(i[k]||'');const x=g(a),y=g(b);return (x>y?1:x<y?-1:0)*UI.dir});
  const h=(k,t)=>`<th data-s="${k}">${t}${UI.sort===k?(UI.dir>0?' ↑':' ↓'):''}</th>`;
- return `<div class="tw"><table><tr>${h('num','Nº')}${h('client','Cliente')}${h('cargo','Mercadoria')}${h('from','Origem')}${h('col','Estado')}${h('owner','Resp.')}${h('prio','Prioridade')}${h('due','Prazo')}${h('prog','Progresso')}</tr>`+rows.map(i=>`<tr class="r" data-id="${i.id}"><td class="mono">${esc(i.num)}</td><td><b>${esc(i.client)}</b></td><td>${esc(i.cargo)}</td><td>${esc(i.from)}</td><td><span class="dot" style="display:inline-block;background:${col(i.col)?.color};margin-right:6px"></span>${esc(col(i.col)?.name)}</td><td>${esc(i.owner)}</td><td><span class="tag p-${i.prio}">${i.prio}</span></td><td class="${late(i)?'late':''}">${fmt(i.due)}</td><td>${prog(i)}%</td></tr>`).join('')+`</table></div>`+(rows.length?'':'<div class="empty">Nenhum processo encontrado</div>')}
+ return `<div class="tw"><table><tr>${h('num','Nº')}${h('client','Cliente')}${h('cargo','Mercadoria')}${h('from','Origem')}${h('col','Estado')}${h('owner','Resp.')}${h('prio','Prioridade')}${h('due','Prazo')}${h('prog','Progresso')}${h('ref','Referência')}${h('valor','Honorários')}</tr>`+rows.map(i=>`<tr class="r" data-id="${i.id}"><td class="mono">${esc(i.num)}</td><td><b>${esc(i.client)}</b></td><td>${esc(i.cargo)}</td><td>${esc(i.from)}</td><td><span class="dot" style="display:inline-block;background:${col(i.col)?.color};margin-right:6px"></span>${esc(col(i.col)?.name)}</td><td>${esc(i.owner)}</td><td><span class="tag p-${i.prio}">${i.prio}</span></td><td class="${late(i)?'late':''}">${fmt(i.due)}</td><td>${prog(i)}%</td><td>${esc(i.ref)}</td><td>${mzn(i.valor)}</td></tr>`).join('')+`</table></div>`+(rows.length?'':'<div class="empty">Nenhum processo encontrado</div>')}
+const mzn=n=>n===''||n==null?'—':new Intl.NumberFormat('pt-PT').format(n)+' MZN';
+const dl=(name,txt,type)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:type+';charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)};
+function csv(all){const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const H=['Nº','Cliente','Email','Telefone','Mercadoria','Referência','Origem','Destino','Estado','Responsável','Prioridade','Prazo','Honorários (MZN)','Progresso %','Etiquetas','Arquivado'];
+ const rows=(all===true?S.items:vis()).map(i=>[i.num,i.client,i.cemail,i.tel,i.cargo,i.ref,i.from,i.to,col(i.col)&&col(i.col).name,i.owner,i.prio,i.due,i.valor,prog(i),(i.tags||[]).join(' | '),i.arch?'sim':'não']);
+ dl('processos-'+today()+'.csv','\ufeff'+[H,...rows].map(r=>r.map(q).join(';')).join('\r\n'),'text/csv');toast('CSV exportado ('+rows.length+' processos)')}
+function notify(i){const tel=(i.tel||'').replace(/\D/g,'');if(!tel){alert('Indique primeiro o telefone do cliente, com indicativo (ex.: 258…).');return}
+ const t=`Olá ${i.client||''}! Atualização do processo Nº ${i.num}${i.ref?' ('+i.ref+')':''}: estado "${col(i.col)?col(i.col).name:''}", ${prog(i)}% concluído.${i.cmsg?' '+i.cmsg:''} — AJ Aduaneira`;
+ log(i,'Cliente avisado por WhatsApp');save();window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(t),'_blank','noopener');drawer(i)}
+function cal(){const d=UI.cal,y=d.getFullYear(),m=d.getMonth(),first=new Date(y,m,1),off=(first.getDay()+6)%7,n=new Date(y,m+1,0).getDate(),v=vis().filter(i=>i.due);let c='';
+ for(let k=0;k<off;k++)c+='<div></div>';
+ for(let k=1;k<=n;k++){const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(k).padStart(2,'0')}`,ev=v.filter(i=>i.due==ds);
+  c+=`<div class="cd0 ${ds==today()?'td':''}"><span>${k}</span>${ev.map(i=>`<div class="ev ${late(i)?'lt':''}" data-id="${i.id}" style="border-left-color:${col(i.col)?col(i.col).color:'#999'}">${esc(i.client||i.num)}</div>`).join('')}</div>`}
+ const nm=first.toLocaleDateString('pt-PT',{month:'long',year:'numeric'});
+ return `<div class="tb"><button class="ib" data-cn="-1">‹</button><b style="min-width:150px;text-align:center;text-transform:capitalize">${nm}</b><button class="ib" data-cn="1">›</button><button class="ghost" data-cn="t">Hoje</button></div><div class="cg">${['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map(x=>`<div class="ch0">${x}</div>`).join('')}${c}</div>`+(v.length?'':'<div class="empty" style="margin-top:12px">Nenhum processo com prazo definido.</div>')}
+function stats(){const A=S.items.filter(i=>!i.arch),cur=A.filter(i=>!done(i)),dn=A.filter(done),lt=cur.filter(late);
+ const cl=new Set(A.map(i=>(i.cemail||i.client||'').toLowerCase()).filter(Boolean)).size;
+ const avg=cur.length?Math.round(cur.reduce((s,i)=>s+prog(i),0)/cur.length):0,val=cur.reduce((s,i)=>s+(+i.valor||0),0);
+ const K=(n,l)=>`<div class="stat-card"><div class="stat-num" style="font-size:${String(n).length>9?'18px':''}">${n}</div><div class="stat-label">${l}</div></div>`;
+ const bar=(l,n,mx,c)=>`<div class="br"><span>${esc(l)}</span><em class="bx"><i style="width:${n/mx*100}%;${c?'background:'+c:''}"></i></em><b>${n}</b></div>`;
+ const mx=Math.max(1,...S.cols.map(c=>A.filter(i=>i.col===c.id).length));
+ const bars=S.cols.map(c=>bar(c.name,A.filter(i=>i.col===c.id).length,mx,c.color)).join('')||'<div class="empty">Sem colunas.</div>';
+ const owners=[...new Set(A.map(i=>i.owner||'—'))],omx=Math.max(1,...owners.map(o=>A.filter(i=>(i.owner||'—')==o).length));
+ const ow=owners.map(o=>bar(o,A.filter(i=>(i.owner||'—')==o).length,omx)).join('')||'<div class="empty">Sem processos.</div>';
+ const lts=lt.sort((a,b)=>a.due>b.due?1:-1).slice(0,8).map(i=>`<div class="ev lt" data-id="${i.id}">${esc(i.client||i.num)} <small>· prazo ${fmt(i.due)}</small></div>`).join('')||'<div class="empty">Sem atrasos.</div>';
+ const rec=S.items.flatMap(i=>(i.log||[]).map(l=>({...l,c:i.client||i.num,id:i.id}))).sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,8).map(l=>`<div class="ev" data-id="${l.id}"><b>${esc(l.c)}</b> — ${esc(l.t)} <small>${esc(l.d)}</small></div>`).join('');
+ return `<div class="stat-grid">${K(cur.length,'Em curso')}${K(lt.length,'Atrasados')}${K(dn.length,'Concluídos')}${K(cl,'Clientes')}${K(avg+'%','Progresso médio')}${K(mzn(val),'Honorários em curso')}</div><div class="grid-two st2"><div class="notes-card"><h4>Por estado</h4>${bars}</div><div class="notes-card"><h4>Por responsável</h4>${ow}</div><div class="notes-card"><h4>Prazos ultrapassados</h4>${lts}</div><div class="notes-card"><h4>Atividade recente</h4>${rec||'<div class="empty">Sem atividade.</div>'}</div></div>`}
+function clients(){const m=new Map();
+ S.items.filter(i=>!i.arch).forEach(i=>{const k=(i.cemail||i.client||'?').toLowerCase(),o=m.get(k)||{n:i.client||'Sem nome',e:'',t:'',all:0,cur:0};o.all++;if(!done(i))o.cur++;o.t=o.t||i.tel;o.e=o.e||i.cemail;m.set(k,o)});
+ const ini=s=>(s||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+ return `<div class="notes-card"><div class="divider-note" style="margin-top:0"><span class="label">Base de clientes · ${m.size}</span><div class="line"></div></div><div class="client-row client-row-head"><span>Cliente</span><span>Contacto</span><span>Processos</span><span>Em curso</span></div>`+([...m.values()].sort((a,b)=>b.cur-a.cur).map(o=>`<div class="client-row cr" data-q="${esc(o.n)}" style="cursor:pointer"><span class="cn"><span class="mini-avatar">${esc(ini(o.n))}</span>${esc(o.n)}</span><span>${esc(o.e||o.t||'—')}</span><span>${o.all}</span><span>${o.cur}</span></div>`).join('')||'<div class="empty">Ainda não há clientes. Crie um processo para começar.</div>')+'</div>'}
 function render(){
- $('#pm').innerHTML=`<div class="tb"><div class="tabs"><button data-v="board" class="${UI.view=='board'?'on':''}">Quadro</button><button data-v="table" class="${UI.view=='table'?'on':''}">Tabela</button></div>
- <button class="chip ${!UI.own?'on':''}" data-o="">Todos</button>${OWN.map(o=>`<button class="chip ${UI.own==o?'on':''}" data-o="${o}">${o}</button>`).join('')}<span class="sp"></span>${AJ_DB.demo?'<button class="ghost" data-a="reset">Repor dados de exemplo</button>':''}</div>`+(UI.view=='board'?board():table());
+ $('#pm').innerHTML=`<div class="tb"><div class="tabs"><button data-v="board" class="${UI.view=='board'?'on':''}">Quadro</button><button data-v="table" class="${UI.view=='table'?'on':''}">Tabela</button><button data-v="cal" class="${UI.view=='cal'?'on':''}">Calendário</button></div>
+ <button class="chip ${!UI.own?'on':''}" data-o="">Todos</button>${OWN.map(o=>`<button class="chip ${UI.own==o?'on':''}" data-o="${o}">${o}</button>`).join('')}<button class="chip ${UI.flt=='late'?'on':''}" data-f="late">Atrasados</button><button class="chip ${UI.flt=='arch'?'on':''}" data-f="arch">Arquivados</button><span class="sp"></span><button class="ghost" data-a="csv">Exportar CSV</button>${AJ_DB.demo?'<button class="ghost" data-a="reset">Repor dados de exemplo</button>':''}</div>`+(UI.view=='board'?board():UI.view=='cal'?cal():table());
  const n=S.items.length;$('#topbarSub').textContent=`${n} processo${n==1?'':'s'} · ${S.items.filter(i=>!/conclu/i.test(col(i.col)?.name||'')).length} em curso`;
 }
 function toast(msg,fn){const t=$('#pmToast');t.innerHTML=`<span>${msg}</span>${fn?'<button>Anular</button>':''}`;t.style.display='flex';undo=fn;clearTimeout(t._t);t._t=setTimeout(()=>{t.style.display='none';undo=null},6000);if(fn)t.querySelector('button').onclick=()=>{fn();t.style.display='none';render();save()}}
-function create(c){const i={id:uid(),num:nextNum(),client:'',cargo:'',from:'',to:'Lichinga',owner:'JM',prio:'media',due:'',col:c||S.cols[0]?.id,check:['Documentação recebida','Declaração submetida','Pagamento de direitos','Libertação da carga'].map(t=>C(t)),notes:'',log:[],cemail:'',cmsg:''};log(i,'Processo aberto',1);S.items.push(i);save();render();openDr(i.id,true)}
+function create(c){const i={id:uid(),num:nextNum(),client:'',cargo:'',from:'',to:'Lichinga',owner:'JM',prio:'media',due:'',col:c||S.cols[0]?.id,check:['Documentação recebida','Declaração submetida','Pagamento de direitos','Libertação da carga'].map(t=>C(t)),notes:'',log:[],cemail:'',cmsg:'',tel:'',ref:'',valor:'',tags:[],arch:false,docs:[]};log(i,'Processo aberto',1);S.items.push(i);save();render();openDr(i.id,true)}
 function del(id){const i=S.items.find(x=>x.id===id),ix=S.items.indexOf(i);S.items.splice(ix,1);if(UI.sel===id)closeDr();save();render();toast('Processo eliminado',()=>S.items.splice(ix,0,i))}
 function dup(id){const o=S.items.find(x=>x.id===id),i=JSON.parse(JSON.stringify(o));i.id=uid();i.num=nextNum();i.client+=' (cópia)';i.log=[];log(i,'Duplicado de Nº '+o.num);S.items.splice(S.items.indexOf(o)+1,0,i);save();render()}
 function openDr(id,focus){const i=S.items.find(x=>x.id===id);if(!i)return;UI.sel=id;drawer(i);$('#pmShade').style.display='block';requestAnimationFrame(()=>{$('#pmDr').classList.add('open');if(focus)$('#pmDr .ti').focus()})}
@@ -1324,22 +1386,30 @@ function drawer(i){const f=(l,k,t='text',x='')=>`<div class="pr"><label>${l}</la
  ${f('Nº processo','num')}${f('Mercadoria','cargo')}${f('Origem','from')}${f('Destino','to')}
  <div class="pr"><label>Responsável</label><select data-f="owner">${[...new Set([...OWN,i.owner])].map(o=>`<option ${o==i.owner?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
  <div class="pr"><label>Prioridade</label><select data-f="prio">${['alta','media','baixa'].map(p=>`<option ${p==i.prio?'selected':''}>${p}</option>`).join('')}</select></div>
- ${f('Prazo','due','date')}${f('Email do cliente','cemail','email')}
+ ${f('Prazo','due','date')}${f('Email do cliente','cemail','email')}${f('Telefone do cliente','tel','tel')}${f('Referência (BL / contentor)','ref')}${f('Honorários (MZN)','valor','number','min="0" step="any"')}<div class="pr"><label>Etiquetas</label><input data-f="tags" value="${esc((i.tags||[]).join(', '))}" placeholder="urgente, viatura, refrigerado"></div>
  <h4><span>Checklist · ${prog(i)}%</span></h4><div id="pmCk">${ck(i)}</div>
  <div class="ck"><span style="width:17px"></span><input type="text" id="pmNewCk" placeholder="+ Adicionar passo e carregar Enter"></div>
- <h4>Mensagem visível ao cliente</h4><textarea data-f="cmsg" style="min-height:70px" placeholder="Ex.: Documentos recebidos. A aguardar pagamento dos direitos.">${esc(i.cmsg)}</textarea><h4>Notas internas (o cliente não vê)</h4><textarea data-f="notes" placeholder="Escreva notas, referências, números de contentor…">${esc(i.notes)}</textarea>
+ <h4><span>Documentos</span></h4>${(i.docs||[]).map((d,n)=>`<div class="ck"><input type="checkbox" data-dv="${n}" ${d.v?'checked':''} title="Visível ao cliente"><a href="${esc(d.u)}" target="_blank" rel="noopener" style="flex:1;font-size:13.5px;color:var(--amber);word-break:break-all">${esc(d.n||d.u)}</a><button class="ib x" data-a="deldoc" data-n="${n}">${ic('x')}</button></div>`).join('')}<div class="ck"><span style="width:17px"></span><input type="text" id="pmDocN" placeholder="Nome (ex.: Fatura)" style="flex:1"><input type="text" id="pmDocU" placeholder="Ligação https://…" style="flex:2"><button class="ib" data-a="adddoc">${ic('plus')}</button></div><p style="font-size:11.5px;color:var(--graphite);margin-top:4px">Marque a caixa para o cliente ver o documento. Cole a ligação (Drive, Dropbox…).</p><h4>Mensagem visível ao cliente</h4><textarea data-f="cmsg" style="min-height:70px" placeholder="Ex.: Documentos recebidos. A aguardar pagamento dos direitos.">${esc(i.cmsg)}</textarea><h4>Notas internas (o cliente não vê)</h4><textarea data-f="notes" placeholder="Escreva notas, referências, números de contentor…">${esc(i.notes)}</textarea>
  <h4>Histórico</h4>${i.log.map(l=>`<div class="lg">${esc(l.d)} — ${esc(l.t)}</div>`).join('')}
- <div class="acts"><button class="btn2" data-a="dupd">Duplicar</button><button class="btn2 red" data-a="deld">Eliminar processo</button></div>`}
+ <div class="acts"><button class="btn2" data-a="wa">Avisar cliente (WhatsApp)</button><button class="btn2" data-a="arch">${i.arch?'Desarquivar':'Arquivar'}</button><button class="btn2" data-a="dupd">Duplicar</button><button class="btn2 red" data-a="deld">Eliminar processo</button></div>`}
 const ck=i=>i.check.map((c,n)=>`<div class="ck ${c.d?'d':''}"><input type="checkbox" data-k="${n}" ${c.d?'checked':''}><input type="text" data-kt="${n}" value="${esc(c.t)}"><button class="ib x" data-a="delck" data-n="${n}">${ic('x')}</button></div>`).join('');
 
-document.addEventListener('click',e=>{const r=e.target.closest('#pm,#pmDr,#pmShade,.new-btn');if(!r)return;
- const t=e.target.closest('[data-a],[data-v],[data-o],[data-s],.k,tr.r,#pmShade,.new-btn');if(!t)return;
+document.addEventListener('click',e=>{const r=e.target.closest('#pm,#pmDr,#pmShade,.new-btn,#view-clientes,#view-relatorios');if(!r)return;
+ const t=e.target.closest('[data-a],[data-v],[data-o],[data-s],[data-f],[data-cn],.k,tr.r,.ev,.cr,#pmShade,.new-btn');if(!t)return;
  const a=t.dataset.a,cl=t.closest('.cl'),k=t.closest('.k');
  if(t.classList.contains('new-btn'))return create(UI.view=='board'?S.cols[0]?.id:undefined);
  if(t.id=='pmShade'||a=='close')return closeDr();
  if(t.dataset.v){UI.view=t.dataset.v;return render()}
  if(t.dataset.o!==undefined&&t.classList.contains('chip')){UI.own=t.dataset.o;return render()}
  if(t.dataset.s){UI.dir=UI.sort==t.dataset.s?-UI.dir:1;UI.sort=t.dataset.s;return render()}
+ if(t.dataset.f){UI.flt=UI.flt==t.dataset.f?'':t.dataset.f;return render()}
+ if(t.dataset.cn!==undefined){UI.cal=t.dataset.cn=='t'?new Date():new Date(UI.cal.getFullYear(),UI.cal.getMonth()+(+t.dataset.cn),1);return render()}
+ if(t.classList.contains('cr')){UI.q=t.dataset.q.toLowerCase();const si=$('#pmSearch');if(si)si.value=t.dataset.q;UI.view='board';UI.flt='';switchAdminView('processos',$('#sbnav-processos'));return}
+ if(a=='csv')return csv();
+ if(a=='wa')return notify(S.items.find(x=>x.id===UI.sel));
+ if(a=='arch'){const i=S.items.find(x=>x.id===UI.sel);i.arch=!i.arch;log(i,i.arch?'Processo arquivado':'Processo desarquivado');save();closeDr();return toast(i.arch?'Processo arquivado':'Processo desarquivado')}
+ if(a=='adddoc'){const i=S.items.find(x=>x.id===UI.sel),u=$('#pmDocU').value.trim(),n=$('#pmDocN').value.trim();if(!/^https?:\/\//i.test(u))return alert('Cole uma ligação que comece por https://');(i.docs=i.docs||[]).push({n:n||'Documento',u,v:false});log(i,'Documento adicionado: '+(n||u));save();return drawer(i)}
+ if(a=='deldoc'){const i=S.items.find(x=>x.id===UI.sel);i.docs.splice(+t.dataset.n,1);save();return drawer(i)}
  if(a=='add')return create(cl.dataset.c);
  if(a=='addcol'){S.cols.push({id:uid(),name:'Nova coluna',color:COLORS[S.cols.length%COLORS.length]});save();render();const n=document.querySelectorAll('#pm .cn');n[n.length-1].select();return}
  if(a=='color'){const c=col(cl.dataset.c);c.color=COLORS[(COLORS.indexOf(c.color)+1)%COLORS.length];save();return render()}
@@ -1350,17 +1420,18 @@ document.addEventListener('click',e=>{const r=e.target.closest('#pm,#pmDr,#pmSha
  if(a=='dupd'){dup(UI.sel);return closeDr()}
  if(a=='deld')return del(UI.sel);
  if(a=='delck'){const i=S.items.find(x=>x.id===UI.sel);i.check.splice(+t.dataset.n,1);save();return drawer(i)}
- if(t.matches('.k,tr.r'))openDr(t.dataset.id);
+ if(t.matches('.k,tr.r,.ev'))openDr(t.dataset.id);
 });
 document.addEventListener('change',e=>{const el=e.target,i=S.items.find(x=>x.id===UI.sel);
  if(el.dataset.a=='ren'){const c=col(el.closest('.cl').dataset.c);c.name=el.value.trim()||'Sem nome';save();return render()}
  if(!i||!el.closest('#pmDr'))return;
  if(el.dataset.k!==undefined){const c=i.check[+el.dataset.k];c.d=el.checked;log(i,(c.d?'Concluído: ':'Reaberto: ')+c.t,1);save();return drawer(i)}
+ if(el.dataset.dv!==undefined){i.docs[+el.dataset.dv].v=el.checked;log(i,(el.checked?'Documento partilhado com o cliente: ':'Documento ocultado: ')+i.docs[+el.dataset.dv].n);return save()}
  if(el.dataset.kt!==undefined){i.check[+el.dataset.kt].t=el.value;return save()}
  const f=el.dataset.f;if(!f)return;
  if(f=='col'){log(i,'Movido para '+col(el.value).name,1)}
  else if(['prio','owner','due'].includes(f))log(i,`${{prio:'Prioridade',owner:'Responsável',due:'Prazo'}[f]}: ${el.value||'—'}`);
- i[f]=el.value;save();render();if(f=='col'||f=='prio'||f=='owner'||f=='due')drawer(i)});
+ i[f]=f=='tags'?el.value.split(',').map(s=>s.trim()).filter(Boolean):f=='valor'?(el.value===''?'':+el.value):el.value;save();render();if(f=='col'||f=='prio'||f=='owner'||f=='due')drawer(i)});
 document.addEventListener('input',e=>{const el=e.target,i=S.items.find(x=>x.id===UI.sel);
  if(el.id=='pmSearch'){UI.q=el.value.toLowerCase().trim();return render()}
  if(i&&el.closest('#pmDr')&&(el.dataset.f=='client'||el.dataset.f=='notes'||el.dataset.f=='cmsg')){i[el.dataset.f]=el.value;save();if(el.dataset.f=='client')render()}});
@@ -1383,8 +1454,8 @@ document.addEventListener('drop',e=>{const c=e.target.closest?.('#pm .cl[data-c]
 const host=$('#view-processos');host.innerHTML='<div id="pm"></div>';
 document.body.insertAdjacentHTML('beforeend','<div id="pmShade"></div><div id="pmDr"></div><div id="pmToast"></div>');
 const si=document.querySelector('#adminView .search input');si.id='pmSearch';
-const _sw=window.switchAdminView;window.switchAdminView=function(n,el){_sw(n,el);if(n=='processos')render()};
-render();window.__pm={render,reload:async()=>{if(UI.sel||Date.now()-AJ_DB.lastSave<4000)return;try{const n=await AJ_DB.load();if(n){S=n;render()}}catch(e){}}};
+const _sw=window.switchAdminView;window.switchAdminView=function(n,el){_sw(n,el);if(n=='processos')render();if(n=='relatorios')$('#view-relatorios').innerHTML=stats();if(n=='clientes')$('#view-clientes').innerHTML=clients()};
+render();window.__pm={render,getS:()=>S,csv,json:()=>dl('aj-backup-'+today()+'.json',JSON.stringify(S,null,1),'application/json'),reload:async()=>{if(UI.sel||Date.now()-AJ_DB.lastSave<4000)return;try{const n=await AJ_DB.load();if(n){S=n;render()}}catch(e){}}};
 };
 
 </script>
@@ -1401,7 +1472,7 @@ function status(t,err){const s=$('#ajSync');s.textContent=t;s.className=err?'err
 /* ---------- camada de dados do painel interno ---------- */
 let snap=new Map(),cur=null,timer=null;
 const rowC=(c,i)=>({id:c.id,pos:i,nome:c.name,cor:c.color});
-const rowP=(p,i)=>({id:p.id,pos:i,num:p.num,cliente:p.client,mercadoria:p.cargo,origem:p.from,destino:p.to,responsavel:p.owner,prioridade:p.prio,prazo:p.due||null,coluna_id:p.col,checklist:p.check,notas:p.notes,log:p.log,cliente_email:(p.cemail||'').trim().toLowerCase()||null,mensagem_cliente:p.cmsg||''});
+const rowP=(p,i)=>({id:p.id,pos:i,num:p.num,cliente:p.client,mercadoria:p.cargo,origem:p.from,destino:p.to,responsavel:p.owner,prioridade:p.prio,prazo:p.due||null,coluna_id:p.col,checklist:p.check,notas:p.notes,log:p.log,cliente_email:(p.cemail||'').trim().toLowerCase()||null,mensagem_cliente:p.cmsg||'',telefone_cliente:p.tel||null,referencia:p.ref||null,valor:(p.valor===''||p.valor==null)?null:+p.valor,etiquetas:p.tags||[],arquivado:!!p.arch,docs:p.docs||[]});
 const chk=r=>{if(r.error)throw r.error};
 async function flush(){
  const S=cur,cr=S.cols.map(rowC),pr=S.items.map(rowP),J=JSON.stringify;
@@ -1424,7 +1495,7 @@ const DB=window.AJ_DB={demo:!live,lastSave:0,
   const [c,p]=await Promise.all([sb.from('colunas').select('*').order('pos'),sb.from('processos').select('*').order('pos')]);
   chk(c);chk(p);
   let cols=c.data.map(r=>({id:r.id,name:r.nome,color:r.cor}));
-  const items=p.data.map(r=>({id:r.id,num:r.num,client:r.cliente||'',cargo:r.mercadoria||'',from:r.origem||'',to:r.destino||'',owner:r.responsavel||'',prio:r.prioridade||'media',due:r.prazo||'',col:r.coluna_id,check:r.checklist||[],notes:r.notas||'',log:r.log||[],cemail:r.cliente_email||'',cmsg:r.mensagem_cliente||''}));
+  const items=p.data.map(r=>({id:r.id,num:r.num,client:r.cliente||'',cargo:r.mercadoria||'',from:r.origem||'',to:r.destino||'',owner:r.responsavel||'',prio:r.prioridade||'media',due:r.prazo||'',col:r.coluna_id,check:r.checklist||[],notes:r.notas||'',log:r.log||[],cemail:r.cliente_email||'',cmsg:r.mensagem_cliente||'',tel:r.telefone_cliente||'',ref:r.referencia||'',valor:r.valor==null?'':r.valor,tags:r.etiquetas||[],arch:!!r.arquivado,docs:r.docs||[]}));
   snap=new Map();cols.forEach((x,i)=>snap.set('c'+x.id,JSON.stringify(rowC(x,i))));items.forEach((x,i)=>snap.set('p'+x.id,JSON.stringify(rowP(x,i))));
   const S={cols,items};
   if(!cols.length){S.cols=[['Documentação pendente','#0BA5C7'],['Em alfândega','#3E5C8A'],['Concluído','#4C6E5A']].map(([name,color])=>({id:crypto.randomUUID(),name,color}));DB.save(S)}
@@ -1494,13 +1565,14 @@ window.showAdmin=async()=>{
  if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}
  setMode('login');show('loginView')};
 async function logout(){if(live)await sb.auth.signOut();location.href=location.pathname}
+window.AJ_LOGOUT=logout;
 $('#cvOut').onclick=logout;
 (function(){const bk=document.querySelector('#adminView .sb-back');const o=bk.cloneNode(true);o.lastChild.textContent='Terminar sessão';o.onclick=logout;o.style.marginTop='10px';bk.after(o)})();
 
 async function enter(user,demoRole){
  let role=demoRole||'cliente',nome=(user.user_metadata&&user.user_metadata.nome)||user.email.split('@')[0];
  if(live){const{data,error}=await sb.from('profiles').select('papel,nome').eq('id',user.id).maybeSingle();if(error){setMode('login');show('loginView');return msg(error.message)}role=data&&data.papel||'cliente';nome=data&&data.nome||nome}
- me={email:user.email,role,nome};
+ me={email:user.email,role,nome};window.AJ_ME=me;document.dispatchEvent(new CustomEvent('aj:login',{detail:me}));
  ['auPass','auPass2'].forEach(i=>G(i).value='');
  if(role=='equipa'||role=='admin'){
   document.querySelector('#adminView .sb-foot-text').innerHTML=`<div class="name">${esc(nome)}</div><div class="role">${role=='admin'?'Administrador':'Equipa AJ'}</div>`;
@@ -1518,11 +1590,12 @@ const DEMO_ROWS=[{num:'0417/26',cliente:'Cliente Demo',mercadoria:'Material de c
 const fd=d=>d?new Date(d+'T12:00').toLocaleDateString('pt-PT',{day:'2-digit',month:'long'}):'';
 function cvCard(r){const ck=r.checklist||[],ok=ck.filter(c=>c.d),pend=ck.filter(c=>!c.d),p=ck.length?Math.round(ok.length/ck.length*100):0;
  const wa=(AJ_CONTACTS.whatsapp[0]||'');const txt=encodeURIComponent(`Olá! Gostaria de saber do processo Nº ${r.num}.`);
- return `<div class="cv-card"><div class="cv-top"><div><b>Processo Nº ${esc(r.num)}</b><small>${esc(r.mercadoria)} · ${esc(r.origem)} → ${esc(r.destino)}</small></div><span class="cv-st" style="background:${esc(r.estado_cor||'#0BA5C7')}">${esc(r.estado)}</span></div>
+ return `<div class="cv-card"><div class="cv-top"><div><b>Processo Nº ${esc(r.num)}</b><small>${esc(r.mercadoria)} · ${esc(r.origem)} → ${esc(r.destino)}${r.referencia?' · '+esc(r.referencia):''}</small></div><span class="cv-st" style="background:${esc(r.estado_cor||'#0BA5C7')}">${esc(r.estado)}</span></div>
  <div class="cv-pr"><span>${ok.length} de ${ck.length} passos concluídos</span><span>${p}%</span></div><div class="cv-bar"><i style="width:${p}%"></i></div>
  ${r.prazo?`<p style="font-size:13px;color:var(--graphite);margin-top:10px">Previsão: <b style="color:var(--ink)">${fd(r.prazo)}</b></p>`:''}
  ${r.mensagem_cliente?`<div class="cv-msg"><small>MENSAGEM DA AJ ADUANEIRA</small>${esc(r.mensagem_cliente)}</div>`:''}
  <div class="cv-cols" style="margin-top:18px"><div><h4>Falta fazer</h4>${pend.map(c=>`<div class="cv-it"><i></i>${esc(c.t)}</div>`).join('')||'<div class="cv-it ok"><i></i>Tudo concluído</div>'}</div><div><h4>Já concluído</h4>${ok.map(c=>`<div class="cv-it ok"><i></i>${esc(c.t)}</div>`).join('')||'<div class="cv-it">Ainda nada</div>'}</div></div>
+ ${(r.documentos||[]).filter(d=>/^https?:\/\//i.test(d.u)).length?`<div class="cv-tl"><h4 class="t">Documentos</h4>${r.documentos.filter(d=>/^https?:\/\//i.test(d.u)).map(d=>`<div><a href="${esc(d.u)}" target="_blank" rel="noopener" style="color:var(--amber)">${esc(d.n||'Documento')}</a></div>`).join('')}</div>`:''}
  ${(r.historico||[]).length?`<div class="cv-tl"><h4 class="t">Histórico</h4>${r.historico.map(h=>`<div><span>${esc(h.d)}</span>${esc(h.t)}</div>`).join('')}</div>`:''}
  <div class="cv-foot"><a href="https://wa.me/${wa}?text=${txt}" target="_blank" rel="noopener">Falar connosco no WhatsApp</a></div></div>`}
 async function loadClient(){const L=$('#cvList');let rows=DEMO_ROWS;
@@ -1558,6 +1631,9 @@ function apply(c){c=c||{};const[h,p]=hero();
  AJ_CONTACTS.whatsapp.splice(0,9,...(wa.length?wa:orig.wa));AJ_CONTACTS.emails.splice(0,9,...(em.length?em:orig.em));
  const f=$('.wa-float');if(f)f.href=f.href.replace(/wa\.me\/\d+/,'wa.me/'+AJ_CONTACTS.whatsapp[0]);
  document.querySelectorAll('.contact-line').forEach(l=>{const[a,b]=l.children;if(!a||!b)return;if(/whatsapp/i.test(a.textContent))b.textContent=phone(AJ_CONTACTS.whatsapp[0]);if(/e-?mail/i.test(a.textContent))b.textContent=AJ_CONTACTS.emails[0]});
+ {const rs=document.documentElement.style;if(c.cor){rs.setProperty('--amber',c.cor);rs.setProperty('--amber-10',c.cor+'1F')}else{rs.removeProperty('--amber');rs.removeProperty('--amber-10')}
+ document.querySelectorAll('img.brand-mark').forEach(im=>{if(!im.dataset.o)im.dataset.o=im.src;im.src=c.logo||im.dataset.o});document.documentElement.classList.toggle('logo-custom',!!c.logo);
+ let mt=$('#ajMaint');if(c.manut&&c.manut.on){if(!mt){mt=document.createElement('div');mt.id='ajMaint';$('#siteView').appendChild(mt)}mt.innerHTML=`<div><h2>${esc(c.manut.texto||'Voltamos em breve.')}</h2><a onclick="showAdmin()">Área reservada</a></div>`}else if(mt)mt.remove()}
  let b=$('#ajBanner');
  if(c.aviso&&c.aviso.on&&c.aviso.texto){if(!b){b=document.createElement('div');b.id='ajBanner';$('#siteView').prepend(b)}b.innerHTML=`<span>${esc(c.aviso.texto)}</span><button aria-label="Fechar">×</button>`;b.querySelector('button').onclick=()=>b.remove()}else if(b)b.remove()}
 async function loadCfg(){if(!live){try{return JSON.parse(localStorage.getItem(LK))}catch(e){return null}}const{data}=await sb.from('site_config').select('valor').eq('chave','site').maybeSingle();return data&&data.valor}
@@ -1590,20 +1666,74 @@ function renderS(){const c=CFG||{},[h,p]=hero(),w=c.wa||[],e=c.em||[],A=c.aviso|
 function collect(){return{aviso:{on:$('#sAvOn').checked,texto:$('#sAv').value.trim()},wa:[...document.querySelectorAll('[data-wa]')].map(i=>i.value),em:[...document.querySelectorAll('[data-em]')].map(i=>i.value),titulo:$('#sT').value.trim(),sub:$('#sS').value.trim()}}
 function build(){$('#view-admin').innerHTML=`<div id="adm"><div class="tabs"><button data-t="M" class="on">Membros</button><button data-t="S">Site</button><span id="admSt" class="st"></span></div><div id="admM"></div><div id="admS" style="display:none"></div></div>`;
  $('#adm').addEventListener('click',async e=>{const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.t){document.querySelectorAll('#adm .tabs button').forEach(b=>b.classList.toggle('on',b==t));$('#admM').style.display=t.dataset.t=='M'?'':'none';$('#admS').style.display=t.dataset.t=='S'?'':'none';if(t.dataset.t=='S')renderS();return}
+  if(t.dataset.t){document.querySelectorAll('#adm .tabs button').forEach(b=>b.classList.toggle('on',b==t));$('#admM').style.display=t.dataset.t=='M'?'':'none';$('#admS').style.display=t.dataset.t=='S'?'':'none';if(t.dataset.t=='S')renderS();document.querySelectorAll('#adm .xp').forEach(p=>p.style.display=p.dataset.p==t.dataset.t?'':'none');if(window.AJ_XTAB)AJ_XTAB(t.dataset.t);return}
   try{
    if(t.dataset.a=='inv'){const em=$('#inEmail').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(em))return status('Email inválido.',1);t.disabled=true;await API.invite(em,$('#inNome').value.trim(),$('#inPapel').value);status('Membro adicionado.');await refresh()}
    if(t.dataset.un){await API.unInvite(t.dataset.un);await refresh()}
-   if(t.dataset.a=='pub'){const v=collect();await saveCfg(v);CFG=v;apply(v);status('Publicado no site.')}
+   if(t.dataset.a=='pub'){const v={...(CFG||{}),...collect()};await saveCfg(v);CFG=v;apply(v);status('Publicado no site.')}
    if(t.dataset.a=='rst'){if(!confirm('Repor os textos e contactos originais do site?'))return;await saveCfg({});CFG={};apply({});renderS();status('Original reposto.')}
   }catch(x){status('Erro: '+x.message,1);t.disabled=false}});
  $('#adm').addEventListener('change',async e=>{const id=e.target.dataset.role;if(!id)return;
   if(e.target.value=='cliente'&&!confirm('Retirar o acesso interno a esta pessoa?')){return refresh()}
   try{await API.setRole(id,e.target.value);status('Papel atualizado.');await refresh()}catch(x){status('Erro: '+x.message,1);refresh()}})}
+window.AJ_SITE={get:()=>CFG||{},save:async v=>{await saveCfg(v);CFG=v;apply(v)},reapply:()=>apply(CFG)};
 window.AJ_ADMIN_START=function(me){ME=me;if(!built){built=true;build()}refresh()};
 document.addEventListener('DOMContentLoaded',()=>{});
 snap();loadCfg().then(c=>{CFG=c;apply(c)}).catch(()=>{});
 if(typeof ADMIN_VIEWS!=='undefined')ADMIN_VIEWS.admin={title:'Administração',sub:'Membros e edição rápida do site'};
+})();
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s),G=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const logoSrc=()=>{const i=document.querySelector('#siteView img.brand-mark');return i?(i.dataset.o||i.src):''};
+document.querySelectorAll('.au-logo').forEach(l=>{const i=new Image();i.className='brand-mark au-lg';i.alt='';i.src=logoSrc();l.prepend(i)});
+if(window.AJ_SITE)AJ_SITE.reapply();
+/* ----- menu da conta (terminar sessão escondido) ----- */
+const menu=document.createElement('div');menu.id='acctMenu';document.body.appendChild(menu);
+let ME=null;const ini=n=>(n||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const nb=$('#adminView .topbar .new-btn');if(nb){const a=document.createElement('button');a.id='acctBtn';a.className='acct';a.title='A minha conta';nb.after(a)}
+const cvo=G('cvOut');if(cvo){cvo.style.display='none';const a=document.createElement('button');a.id='cvAcct';a.className='acct';a.title='A minha conta';cvo.after(a)}
+document.addEventListener('aj:login',e=>{ME=e.detail;['acctBtn','cvAcct'].forEach(i=>{const b=G(i);if(b)b.textContent=ini(ME.nome)})});
+function openMenu(btn){const r=btn.getBoundingClientRect();
+ menu.innerHTML=`<div class="am-h"><b>${esc(ME.nome)}</b><small>${esc(ME.email)}</small><em>${ME.role=='admin'?'Administrador':ME.role=='equipa'?'Equipa AJ':'Cliente'}</em></div><button data-m="site">Ver o site público</button>${ME.role!='cliente'?'<button data-m="def">Definições</button>':''}<button data-m="out" class="red">Terminar sessão</button>`;
+ menu.style.display='block';const w=menu.offsetWidth,hh=menu.offsetHeight;
+ menu.style.left=Math.min(Math.max(8,r.right-w),innerWidth-w-8)+'px';let top=r.bottom+8;if(top+hh>innerHeight-8)top=Math.max(8,r.top-hh-8);menu.style.top=top+'px'}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('#acctBtn,#cvAcct,#adminView .sb-foot');
+ if(b&&ME){e.stopPropagation();if(menu.style.display=='block')menu.style.display='none';else openMenu(b);return}
+ const m=e.target.closest('#acctMenu [data-m]');
+ if(m){menu.style.display='none';const k=m.dataset.m;if(k=='site')showSite();if(k=='def')switchAdminView('definicoes',G('sbnav-definicoes'));if(k=='out'&&confirm('Terminar a sessão?'))AJ_LOGOUT();return}
+ if(!e.target.closest('#acctMenu'))menu.style.display='none'},true);
+document.addEventListener('keydown',e=>{if(e.key=='Escape')menu.style.display='none'});
+/* ----- novas abas do administrador ----- */
+let DR={},tabs=false;const st=t=>{const s=G('admSt');if(s){s.textContent=t;clearTimeout(s._t);s._t=setTimeout(()=>s.textContent='',3000)}};
+const _s=window.AJ_ADMIN_START;
+window.AJ_ADMIN_START=function(me){_s(me);if(tabs)return;tabs=true;const bar=document.querySelector('#adm .tabs'),sp=G('admSt');
+ [['A','Aparência'],['T','Atividade'],['D','Dados']].forEach(([k,l])=>{const b=document.createElement('button');b.dataset.t=k;b.textContent=l;bar.insertBefore(b,sp);const p=document.createElement('div');p.className='xp';p.dataset.p=k;p.style.display='none';G('adm').appendChild(p)})};
+const SW=['#0BA5C7','#3E5C8A','#4C8A64','#C8873C','#8A5CB0','#C83C3C','#1F2933'];
+const PANES={
+A(){const c=AJ_SITE.get(),m=c.manut||{};DR={logo:c.logo||'',cor:c.cor||''};const cur=c.logo||logoSrc();
+ return `<div class="cd"><h3>Logótipo</h3><p class="hn">PNG ou JPG, de preferência quadrado ou com fundo transparente. Aparece no site, no ecrã de entrada e no painel.</p><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img id="xLogo" src="${cur}" alt="" style="width:64px;height:64px;object-fit:contain;border-radius:12px;border:1px solid var(--ink-20)"><input type="file" id="xFile" accept="image/*" style="max-width:240px"><button class="bt g2" data-x="nologo">Usar o original</button></div></div>
+ <div class="cd"><h3>Cor de destaque</h3><p class="hn">Muda a cor principal do site e dos painéis.</p><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><input type="color" id="xCor" value="${c.cor||'#0BA5C7'}" style="width:64px;height:44px;padding:2px">${SW.map(s=>`<button class="bt" data-x="sw" data-c="${s}" style="background:${s};width:34px;height:34px;padding:0;border-radius:50%"></button>`).join('')}<button class="bt g2" data-x="nocor">Original</button></div></div>
+ <div class="cd"><h3>Modo de manutenção</h3><p class="hn">Os visitantes veem só a mensagem abaixo. A área reservada continua acessível pela ligação discreta.</p><label class="tg"><input type="checkbox" id="xMOn" ${m.on?'checked':''}> Ativar modo de manutenção</label><label>Mensagem<input id="xMT" value="${esc(m.texto||'')}" placeholder="Voltamos em breve."></label></div>
+ <button class="bt" data-x="pubA">Publicar aparência</button>`},
+T(){const S=window.__pm?__pm.getS():{items:[]};const L=S.items.flatMap(i=>(i.log||[]).map(l=>({...l,c:i.client||i.num}))).sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,60);
+ return `<div class="cd"><h3>Atividade recente</h3><p class="hn">Últimas ações em todos os processos (mudanças de estado, passos concluídos, avisos aos clientes…).</p>${L.map(l=>`<div class="rw"><div class="n"><b>${esc(l.c)}</b><small>${esc(l.t)}${l.p?' · visível ao cliente':''}</small></div><small>${esc(l.d)}</small></div>`).join('')||'<p class="hn">Ainda sem atividade.</p>'}</div>`},
+D(){const S=window.__pm?__pm.getS():{items:[],cols:[]};
+ return `<div class="cd"><h3>Exportar dados</h3><p class="hn">${S.items.length} processos em ${S.cols.length} colunas. Faça cópias com regularidade.</p><button class="bt" data-x="csv">Todos os processos (CSV para Excel)</button> <button class="bt g2" data-x="json">Cópia de segurança (JSON)</button></div>`}};
+window.AJ_XTAB=k=>{const p=document.querySelector(`#adm .xp[data-p="${k}"]`);if(p&&PANES[k])p.innerHTML=PANES[k]()};
+const readLogo=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,320/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/png'))};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(f)});
+document.addEventListener('change',async e=>{if(e.target.id=='xFile'&&e.target.files[0]){try{DR.logo=await readLogo(e.target.files[0]);G('xLogo').src=DR.logo}catch(x){st('Imagem inválida.')}}
+ if(e.target.id=='xCor')DR.cor=e.target.value});
+document.addEventListener('click',async e=>{const t=e.target.closest('[data-x]');if(!t)return;const k=t.dataset.x;
+ if(k=='nologo'){DR.logo='';G('xLogo').src=logoSrc()}
+ if(k=='sw'){DR.cor=t.dataset.c;G('xCor').value=t.dataset.c}
+ if(k=='nocor'){DR.cor='';G('xCor').value='#0BA5C7'}
+ if(k=='csv')__pm.csv(true);if(k=='json')__pm.json();
+ if(k=='pubA'){try{await AJ_SITE.save({...AJ_SITE.get(),logo:DR.logo,cor:DR.cor,manut:{on:G('xMOn').checked,texto:G('xMT').value.trim()}});st('Aparência publicada.')}catch(x){st('Erro: '+x.message)}}});
 })();
 
 </script>
