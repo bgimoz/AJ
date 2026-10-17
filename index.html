@@ -543,21 +543,46 @@
 
 /* ===== Login + painel do cliente ===== */
 #loginView,#clientView{display:none;min-height:100vh;background:var(--paper);color:var(--ink)}
-.lg-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 20% 10%,var(--amber-10),transparent 55%)}
-.lg-card{width:100%;max-width:400px;background:var(--glass-bg);backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--glass-border);border-radius:20px;padding:30px 26px;box-shadow:0 20px 50px rgba(11,38,48,.12)}
-.lg-back{font:12px 'IBM Plex Mono',monospace;color:var(--graphite);cursor:pointer}
-.lg-brand{font-weight:700;font-size:15px;margin:18px 0 6px;color:var(--amber)}
-.lg-card h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
-.lg-card p{font-size:13.5px;color:var(--graphite);margin-bottom:18px}
-.lg-card label{display:block;font-size:12px;color:var(--graphite);margin-bottom:12px}
-.lg-card input{display:block;width:100%;margin-top:5px;padding:12px 13px;border-radius:11px;border:1px solid var(--ink-20);background:var(--paper);color:var(--ink);font:15px inherit;font-family:inherit}
-.lg-card input:focus{outline:0;border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-10)}
-.lg-btn{width:100%;padding:13px;border:0;border-radius:100px;background:var(--ink);color:var(--paper);font:600 14px inherit;font-family:inherit;cursor:pointer;margin-top:4px}
-.lg-btn:disabled{opacity:.5}
-.lg-err{color:#C83C3C;font-size:12.5px;min-height:18px;margin-bottom:6px}
-.lg-link{display:block;text-align:center;margin-top:14px;font-size:12.5px;color:var(--amber);cursor:pointer}
-.lg-demo{margin-top:18px;padding-top:16px;border-top:1px dashed var(--ink-20);display:grid;gap:8px}
-.lg-demo button{padding:10px;border-radius:10px;border:1px solid var(--ink-20);background:none;color:var(--ink);font:12.5px 'IBM Plex Mono',monospace;cursor:pointer}
+.au{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);min-height:100vh}
+.au-side{background:linear-gradient(155deg,#0B2630 0%,#0E4A5C 62%,#0BA5C7 140%);color:#EAF6F8;padding:44px 52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.au-side::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-160px;bottom:-140px;background:radial-gradient(circle,rgba(11,165,199,.35),transparent 70%)}
+.au-logo{font-weight:700;font-size:17px;letter-spacing:-.01em}.au-logo.m{display:none;color:var(--amber);margin:18px 0 4px}
+.au-hero h2{font-size:clamp(26px,3vw,38px);line-height:1.15;letter-spacing:-.02em;margin-bottom:30px;max-width:440px}
+.au-hero ul{list-style:none;display:grid;gap:18px;max-width:420px}.au-hero li{display:flex;gap:14px;font-size:13.5px;line-height:1.45;color:rgba(234,246,248,.75)}
+.au-hero li b{display:block;color:#fff;font-size:14.5px;margin-bottom:2px}
+.au-hero li i{flex:0 0 26px;height:26px;border-radius:50%;background:rgba(11,165,199,.25);color:#7FE0F2;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px}
+.au-foot{font:12px 'IBM Plex Mono',monospace;color:rgba(234,246,248,.55);position:relative;z-index:1}
+.au-main{display:flex;align-items:center;justify-content:center;padding:32px 22px}
+.au-box{width:100%;max-width:410px}
+.lg-back{font:12px 'IBM Plex Mono',monospace;color:var(--graphite);cursor:pointer;display:inline-block;margin-bottom:22px}.lg-back:hover{color:var(--amber)}
+.au-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--ink-10);border-radius:12px;padding:4px;margin-bottom:26px}
+.au-tabs button{border:0;background:none;padding:10px;border-radius:9px;font:600 13.5px inherit;font-family:inherit;color:var(--graphite);cursor:pointer;transition:all .15s}
+.au-tabs button.on{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.au-box h1{font-size:28px;letter-spacing:-.025em;margin-bottom:6px}
+.au-p{font-size:14px;color:var(--graphite);line-height:1.5;margin-bottom:22px}
+.fl{margin-bottom:15px}.fl label{display:block;font-size:12.5px;font-weight:500;margin-bottom:6px}
+.fl input,.pw input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--ink-20);background:var(--paper);color:var(--ink);font:15px inherit;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+.fl input:focus{outline:0;border-color:var(--amber);box-shadow:0 0 0 4px var(--amber-10)}
+.pw{position:relative}.pw input{padding-right:84px}
+.pw button{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--amber);font:600 12px 'IBM Plex Mono',monospace;cursor:pointer;padding:8px}
+.meter{display:flex;align-items:center;gap:10px;margin-top:8px;opacity:0;transition:opacity .15s}.meter.on{opacity:1}
+.meter b{flex:1;height:5px;border-radius:3px;background:var(--ink-10);overflow:hidden}.meter i{display:block;height:100%;width:0;border-radius:3px;transition:width .25s,background .25s}
+.meter span{font:11px 'IBM Plex Mono',monospace;color:var(--graphite);min-width:72px;text-align:right}
+.au-ck{display:flex;gap:10px;font-size:12.5px;color:var(--graphite);line-height:1.45;margin:4px 0 12px;cursor:pointer}.au-ck input{width:17px;height:17px;accent-color:var(--amber);flex-shrink:0;margin-top:1px}
+.au-row{display:flex;justify-content:flex-end;margin:-4px 0 12px}
+.au-box a[data-m],#auForgot{color:var(--amber);cursor:pointer;font-size:12.5px;font-weight:500}.au-box a[data-m]:hover{text-decoration:underline}
+.au-err{color:#C83C3C;font-size:13px;min-height:20px;margin-bottom:8px;line-height:1.4}
+.au-btn{width:100%;padding:14px;border:0;border-radius:100px;background:var(--ink);color:var(--paper);font:600 14.5px inherit;font-family:inherit;cursor:pointer;transition:transform .15s,opacity .15s}
+.au-btn:hover{transform:translateY(-1px)}.au-btn:disabled{opacity:.55;cursor:wait;transform:none}
+.au-btn.load span::after{content:"";display:inline-block;width:13px;height:13px;margin-left:10px;vertical-align:-2px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:auSp .7s linear infinite}
+.au-btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink-20)}
+@keyframes auSp{to{transform:rotate(360deg)}}
+.au-alt{text-align:center;font-size:13px;color:var(--graphite);margin-top:20px}
+#auDone{text-align:center;padding:6px 0}.au-ic{width:62px;height:62px;border-radius:50%;background:var(--amber-10);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:26px;margin:4px auto 18px}
+#auDone p{font-size:14px;color:var(--graphite);line-height:1.55;margin-bottom:10px}#auDone p b{color:var(--ink)}#auDone p.s{font-size:12.5px;margin-bottom:18px}
+#auDone .au-back2{display:block;margin-top:18px;color:var(--amber);font-size:13px;cursor:pointer}
+.au-demo{margin-top:22px;padding:12px 14px;border-radius:12px;background:var(--amber-10);font-size:12px;line-height:1.5;color:var(--graphite)}.au-demo b{color:var(--ink)}.au-demo code{font:11.5px 'IBM Plex Mono',monospace;color:var(--amber)}
+@media(max-width:860px){.au{grid-template-columns:1fr}.au-side{display:none}.au-logo.m{display:block}.au-main{align-items:flex-start;padding-top:20px}}
 .cv-head{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--ink-10);position:sticky;top:0;background:var(--header-bg);backdrop-filter:blur(12px);z-index:5}
 .cv-head .lg-brand{margin:0}
 .cv-head span{font-size:12.5px;color:var(--graphite);margin-right:12px}
@@ -587,6 +612,27 @@
 .cv-empty{text-align:center;padding:50px 20px;color:var(--graphite)}
 #ajSync{position:fixed;left:14px;bottom:14px;font:11px 'IBM Plex Mono',monospace;color:var(--graphite);background:var(--paper);border:1px solid var(--ink-10);padding:5px 10px;border-radius:100px;z-index:80;display:none}
 #ajSync.err{color:#C83C3C;border-color:#C83C3C}
+
+#ajBanner{display:flex;justify-content:center;align-items:center;padding:10px 44px 10px 16px;background:var(--amber);color:#fff;font-size:13.5px;text-align:center;position:relative;line-height:1.4}
+#ajBanner button{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:none;color:#fff;font-size:22px;cursor:pointer;line-height:1}
+#adm .tabs{display:inline-flex;background:var(--ink-10);border-radius:10px;padding:3px;margin-bottom:18px}
+#adm .tabs button{border:0;background:none;font:500 12.5px 'IBM Plex Mono',monospace;color:var(--graphite);padding:8px 16px;border-radius:8px;cursor:pointer}
+#adm .tabs button.on{background:var(--paper);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#adm .cd{background:var(--glass-bg);backdrop-filter:blur(14px);border:1px solid var(--glass-border);border-radius:16px;padding:20px;margin-bottom:16px}
+#adm h3{font-size:15px;margin-bottom:4px}#adm .hn{font-size:12.5px;color:var(--graphite);margin-bottom:14px;line-height:1.5}
+#adm .g{display:grid;gap:10px;grid-template-columns:1fr}@media(min-width:700px){#adm .g.c3{grid-template-columns:1fr 1fr 1fr}#adm .g.c2{grid-template-columns:1fr 1fr}}
+#adm label{display:block;font-size:12px;color:var(--graphite)}
+#adm input,#adm select,#adm textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border-radius:10px;border:1px solid var(--ink-20);background:var(--paper);color:var(--ink);font:14px inherit;font-family:inherit}
+#adm textarea{min-height:76px;resize:vertical}
+#adm input:focus,#adm select:focus,#adm textarea:focus{outline:0;border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-10)}
+#adm .bt{border:0;background:var(--ink);color:var(--paper);font:600 13px inherit;font-family:inherit;padding:11px 20px;border-radius:100px;cursor:pointer}
+#adm .bt.g2{background:none;color:var(--ink);border:1px solid var(--ink-20)}#adm .bt:disabled{opacity:.5}
+#adm .rw{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--ink-10);flex-wrap:wrap}
+#adm .rw:last-child{border:0}#adm .rw .n{flex:1;min-width:150px}#adm .rw .n b{display:block;font-size:14px}#adm .rw .n small{color:var(--graphite);font-size:12px}
+#adm .rw select{width:auto;margin:0;padding:7px 10px}
+#adm .st{font:12px 'IBM Plex Mono',monospace;margin-left:12px;color:var(--graphite)}#adm .st.er{color:#C83C3C}
+#adm .tg{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);margin-bottom:10px}#adm .tg input{width:auto;margin:0;accent-color:var(--amber)}
+#adm summary{cursor:pointer;font-size:13px;font-weight:600;padding:4px 0}
 
 </style>
 </head>
@@ -887,19 +933,36 @@
 <footer><div class="wrap footer-row"><span>AJ Aduaneira — Agência Aduaneira</span><span class="mono">Niassa, Moçambique</span></div></footer>
 </div>
 
-<div id="loginView"><div class="lg-wrap"><div class="lg-card">
- <a class="lg-back" onclick="showSite()">← Voltar ao site</a>
- <div class="lg-brand">AJ Aduaneira</div>
- <h1 id="lgTitle">Área reservada</h1><p id="lgSub">Entre com o email e a palavra-passe da sua conta.</p>
- <form id="lgForm">
-  <label id="lgEmailW">Email<input type="email" id="lgEmail" autocomplete="username" required></label>
-  <label>Palavra-passe<input type="password" id="lgPass" autocomplete="current-password" minlength="6" required></label>
-  <div class="lg-err" id="lgErr"></div>
-  <button class="lg-btn" id="lgBtn">Entrar</button>
- </form>
- <a class="lg-link" id="lgForgot">Esqueci-me da palavra-passe</a>
- <div class="lg-demo" id="lgDemo"><span style="font:11px 'IBM Plex Mono',monospace;color:var(--graphite)">MODO DEMONSTRAÇÃO (Supabase ainda não configurado)</span><button type="button" data-demo="equipa">Entrar como equipa AJ</button><button type="button" data-demo="cliente">Entrar como cliente</button></div>
-</div></div></div>
+<div id="loginView"><div class="au">
+ <aside class="au-side">
+  <div class="au-logo">AJ Aduaneira</div>
+  <div class="au-hero"><h2>Cada processo aduaneiro, do início à libertação da carga.</h2>
+   <ul><li><i>✓</i><span><b>Acompanhe em tempo real</b>Veja em que fase está o seu processo, sem ter de ligar.</span></li>
+   <li><i>✓</i><span><b>Saiba o que falta</b>Passos concluídos e pendentes, sempre claros.</span></li>
+   <li><i>✓</i><span><b>Privado e seguro</b>Cada cliente vê apenas os seus processos.</span></li></ul></div>
+  <div class="au-foot">Lichinga · Niassa · Moçambique</div>
+ </aside>
+ <main class="au-main"><div class="au-box">
+  <a class="lg-back" onclick="showSite()">← Voltar ao site</a>
+  <div class="au-logo m">AJ Aduaneira</div>
+  <div class="au-tabs" id="auTabs"><button type="button" data-m="login" class="on">Iniciar sessão</button><button type="button" data-m="signup">Criar conta</button></div>
+  <h1 id="auH"></h1><p class="au-p" id="auP"></p>
+  <form id="auForm" novalidate>
+   <div class="fl" id="fName"><label for="auName">Nome completo</label><input id="auName" autocomplete="name" placeholder="O seu nome"></div>
+   <div class="fl" id="fEmail"><label for="auEmail">Email</label><input type="email" id="auEmail" autocomplete="email" placeholder="nome@exemplo.com"></div>
+   <div class="fl" id="fPass"><label for="auPass" id="auPassL">Palavra-passe</label><div class="pw"><input type="password" id="auPass" placeholder="••••••••"><button type="button" id="auEye">Mostrar</button></div>
+    <div class="meter" id="auMeter"><b><i></i></b><span></span></div></div>
+   <div class="fl" id="fPass2"><label for="auPass2">Confirmar palavra-passe</label><input type="password" id="auPass2" autocomplete="new-password" placeholder="Repita a palavra-passe"></div>
+   <label class="au-ck" id="fTerms"><input type="checkbox" id="auTerms"><span>Li e aceito os termos de utilização e a política de privacidade.</span></label>
+   <div class="au-row" id="fRow"><a id="auForgot" data-m="forgot">Esqueci-me da palavra-passe</a></div>
+   <div class="au-err" id="auErr" role="alert" aria-live="polite"></div>
+   <button class="au-btn" id="auBtn"><span>Entrar</span></button>
+  </form>
+  <div id="auDone" hidden></div>
+  <p class="au-alt" id="auAlt"></p>
+  <div class="au-demo" id="lgDemo"><b>Modo de demonstração</b> · o Supabase ainda não está ligado. Use <code>equipa@demo.pt</code> para ver o painel interno, <code>admin@demo.pt</code> para a administração, ou qualquer outro email para o painel do cliente.</div>
+ </div></main>
+</div></div>
 <div id="clientView">
  <div class="cv-head"><div class="lg-brand">AJ Aduaneira</div><div><span id="cvWho"></span><button class="cv-out" id="cvOut">Terminar sessão</button></div></div>
  <div class="cv-main"><h1 id="cvHi"></h1><p class="cv-sub">Acompanhe aqui o estado dos seus processos, o que já foi feito e o que falta.</p><div id="cvList"></div></div>
@@ -915,6 +978,7 @@
         <div class="sb-item" id="sbnav-documentos" onclick="switchAdminView('documentos', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Documentos</div>
         <div class="sb-item" id="sbnav-relatorios" onclick="switchAdminView('relatorios', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 17V9M13 17V5M8 17v-3"></path></svg>Relatórios</div>
         <div class="sb-item" id="sbnav-definicoes" onclick="switchAdminView('definicoes', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Definições</div>
+        <div class="sb-item" id="sbnav-admin" style="display:none" onclick="switchAdminView('admin', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>Administração</div>
       </nav>
       <div class="sb-back" onclick="showSite()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -985,6 +1049,7 @@
           </div>
         </div>
 
+        <div class="admin-view" id="view-admin" style="display:none;"></div>
         <div class="admin-view" id="view-definicoes" style="display:none;">
           <div class="notes-card">
             <div class="divider-note" style="margin-top:0;"><span class="label">Perfil da empresa</span><div class="line"></div></div>
@@ -1190,7 +1255,7 @@
   });
 </script>
 
-<script>window.AJ_CONFIG={supabaseUrl:"",supabaseAnonKey:""}; // <- cole aqui o URL e a anon key do Supabase</script>
+<script>window.AJ_CONFIG={supabaseUrl:"https://uszyeemainunopbrmwur.supabase.co",supabaseAnonKey:"sb_publishable_OBoPUCxUCszAiOT72kTluw_uboEX3fI"}; // <- cole aqui o URL e a anon key do Supabase</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 window.PM_start=async function(){
@@ -1327,7 +1392,7 @@ render();window.__pm={render,reload:async()=>{if(UI.sel||Date.now()-AJ_DB.lastSa
 (function(){
 const CFG=window.AJ_CONFIG||{},$=s=>document.querySelector(s);
 const live=!!(CFG.supabaseUrl&&CFG.supabaseAnonKey&&window.supabase);
-const sb=live?supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey):null;
+const sb=live?supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey):null;window.AJ_SB=sb;window.AJ_LIVE=live;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const VIEWS=['siteView','loginView','clientView','adminView'];
 const show=id=>{VIEWS.forEach(v=>$('#'+v).style.display=v==id?'block':'none');scrollTo(0,0)};
@@ -1368,42 +1433,82 @@ const DB=window.AJ_DB={demo:!live,lastSave:0,
   clearTimeout(timer);status('A guardar…');timer=setTimeout(flush,500)}};
 
 /* ---------- autenticação ---------- */
-let mode='login',me=null;
-const err=t=>$('#lgErr').textContent=t||'';
-function loginMode(m){mode=m;const r=m=='reset';
- $('#lgTitle').textContent=r?'Definir palavra-passe':'Área reservada';
- $('#lgSub').textContent=r?'Escolha a palavra-passe que vai usar daqui para a frente.':'Entre com o email e a palavra-passe da sua conta.';
- $('#lgEmailW').style.display=r?'none':'block';$('#lgEmail').required=!r;
- $('#lgBtn').textContent=r?'Guardar e entrar':'Entrar';$('#lgForgot').style.display=r||!live?'none':'block';
- $('#lgDemo').style.display=live?'none':'grid';err()}
+let mode='login',me=null,pending='',cool=null;
+const G=id=>document.getElementById(id);
+const COPY={login:['Bem-vindo de volta','Inicie sessão para aceder à sua área.','Entrar'],signup:['Crie a sua conta','Demora menos de um minuto. Depois ligamos os seus processos à conta.','Criar conta'],forgot:['Recuperar palavra-passe','Indique o seu email e enviamos uma ligação para definir uma nova.','Enviar ligação'],reset:['Definir palavra-passe','Escolha a palavra-passe que vai usar daqui para a frente.','Guardar e entrar']};
+const LV=['Muito fraca','Fraca','Razoável','Boa','Forte'],LC=['#C83C3C','#C8873C','#C8B13C','#4C8A64','#2E9E5B'];
+const score=p=>{let s=0;if(p.length>=8)s++;if(/[a-z]/.test(p)&&/[A-Z]/.test(p))s++;if(/\d/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s};
+const msg=t=>G('auErr').textContent=t||'';
+function meter(){const p=G('auPass').value,m=G('auMeter'),s=score(p);m.classList.toggle('on',!!p&&(mode=='signup'||mode=='reset'));const b=m.querySelector('i');b.style.width=(p?(s+1)*20:0)+'%';b.style.background=LC[s];m.querySelector('span').textContent=p?LV[s]:''}
+function busy(v){const b=G('auBtn');b.disabled=v;b.classList.toggle('load',v)}
+function setMode(m){mode=m;const c=COPY[m],on=(id,v)=>G(id).style.display=v?'':'none';
+ G('auH').textContent=c[0];G('auP').textContent=c[1];G('auBtn').firstElementChild.textContent=c[2];
+ on('fName',m=='signup');on('fEmail',m!='reset');on('fPass',m!='forgot');on('fPass2',m=='signup'||m=='reset');on('fTerms',m=='signup');on('fRow',m=='login');on('auTabs',m=='login'||m=='signup');
+ G('auForm').hidden=false;G('auDone').hidden=true;busy(false);
+ G('auPassL').textContent=m=='reset'?'Nova palavra-passe':'Palavra-passe';G('auPass').autocomplete=m=='login'?'current-password':'new-password';
+ document.querySelectorAll('#auTabs button').forEach(b=>b.classList.toggle('on',b.dataset.m==m));
+ G('auAlt').innerHTML=m=='forgot'?'<a data-m="login">← Voltar a iniciar sessão</a>':m=='login'?'Ainda não tem conta? <a data-m="signup">Criar conta</a>':m=='signup'?'Já tem conta? <a data-m="login">Iniciar sessão</a>':'';
+ G('lgDemo').style.display=live?'none':'block';msg();meter();
+ setTimeout(()=>G(m=='signup'?'auName':m=='reset'?'auPass':'auEmail').focus(),60)}
+const loginMode=setMode;
+function fail(x){const t=(x&&x.message||'').toLowerCase();
+ if(/invalid login/.test(t))return'Email ou palavra-passe incorretos.';
+ if(/already registered|already been registered/.test(t))return'Já existe uma conta com este email. Inicie sessão.';
+ if(/rate limit|too many|after \d+ seconds/.test(t))return'Demasiadas tentativas. Aguarde um momento e tente de novo.';
+ if(/signups? not allowed|disabled/.test(t))return'O registo de novas contas está desativado.';
+ if(/weak|at least/.test(t))return'A palavra-passe é demasiado fraca ou curta.';
+ if(/fetch|network/.test(t))return'Sem ligação. Verifique a internet e tente de novo.';
+ return'Ocorreu um erro: '+(x&&x.message||'tente novamente')}
+function showDone(kind,email){pending=email;G('auForm').hidden=true;G('auTabs').style.display='none';G('auH').textContent='Verifique o seu email';G('auP').textContent='';G('auAlt').innerHTML='';
+ const d=G('auDone');d.hidden=false;d.dataset.kind=kind;
+ d.innerHTML=`<div class="au-ic">✉</div><p>${kind=='confirm'?'Enviámos uma ligação de confirmação para':'Se existir uma conta com'} <b>${esc(email)}</b>${kind=='confirm'?'. Abra-a para ativar a conta e depois inicie sessão.':', enviámos uma ligação para definir uma nova palavra-passe.'}</p><p class="s">Não a encontra? Veja também a pasta de spam.</p><button class="au-btn ghost" id="auResend" type="button">Reenviar email</button><a class="au-back2" data-m="login">← Voltar a iniciar sessão</a>`;startCool()}
+function startCool(){const b=G('auResend');let n=30;clearInterval(cool);b.disabled=true;const t=()=>{b.textContent=n>0?`Reenviar email (${n}s)`:'Reenviar email';if(n--<=0){clearInterval(cool);b.disabled=false}};t();cool=setInterval(t,1000)}
+const back=()=>location.href.split('#')[0];
+document.addEventListener('click',async e=>{
+ const m=e.target.closest('#loginView [data-m]');if(m){e.preventDefault();return setMode(m.dataset.m)}
+ if(e.target.id=='auResend'){const k=G('auDone').dataset.kind;if(live){const r=k=='confirm'?await sb.auth.resend({type:'signup',email:pending,options:{emailRedirectTo:back()}}):await sb.auth.resetPasswordForEmail(pending,{redirectTo:back()});if(r.error)return alert(fail(r.error))}startCool()}});
+G('auPass').addEventListener('input',meter);
+G('auEye').onclick=()=>{const h=G('auPass').type=='password';G('auPass').type=G('auPass2').type=h?'text':'password';G('auEye').textContent=h?'Ocultar':'Mostrar'};
+G('auForm').addEventListener('submit',async e=>{e.preventDefault();msg();
+ const email=G('auEmail').value.trim().toLowerCase(),pw=G('auPass').value,pw2=G('auPass2').value,nome=G('auName').value.trim();
+ if(mode!='reset'&&!/^\S+@\S+\.\S+$/.test(email))return msg('Introduza um email válido.');
+ if(mode=='signup'&&nome.length<2)return msg('Indique o seu nome.');
+ if(mode!='forgot'&&!pw)return msg('Introduza a palavra-passe.');
+ if(mode=='signup'||mode=='reset'){if(pw.length<8)return msg('A palavra-passe deve ter pelo menos 8 caracteres.');if(score(pw)<2)return msg('Escolha uma palavra-passe mais forte: misture maiúsculas, números ou símbolos.');if(pw!==pw2)return msg('As palavras-passe não coincidem.')}
+ if(mode=='signup'&&!G('auTerms').checked)return msg('Tem de aceitar os termos para criar a conta.');
+ busy(true);
+ try{
+  if(!live){if(mode=='forgot'){busy(false);return showDone('forgot',email)}
+   return await enter({email,user_metadata:{nome:nome||email.split('@')[0]}},/^admin/i.test(email)?'admin':/^equipa/i.test(email)?'equipa':'cliente')}
+  if(mode=='login'){const{data,error}=await sb.auth.signInWithPassword({email,password:pw});
+   if(error){if(/not confirmed/i.test(error.message)){busy(false);return showDone('confirm',email)}throw error}await enter(data.user)}
+  else if(mode=='signup'){const{data,error}=await sb.auth.signUp({email,password:pw,options:{data:{nome},emailRedirectTo:back()}});if(error)throw error;
+   if(data.user&&data.user.identities&&!data.user.identities.length)throw {message:'already registered'};
+   if(data.session)await enter(data.user);else{busy(false);showDone('confirm',email)}}
+  else if(mode=='forgot'){const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:back()});if(error)throw error;busy(false);showDone('forgot',email)}
+  else{const{data,error}=await sb.auth.updateUser({password:pw});if(error)throw error;history.replaceState(null,'',location.pathname);await enter(data.user)}
+ }catch(x){msg(fail(x))}
+ busy(false)});
 window.showSite=()=>show('siteView');
 window.showAdmin=async()=>{
  if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}
- loginMode('login');show('loginView')};
-$('#lgForm').addEventListener('submit',async e=>{e.preventDefault();if(!live)return;err();const b=$('#lgBtn');b.disabled=true;
- try{
-  if(mode=='reset'){const{data,error}=await sb.auth.updateUser({password:$('#lgPass').value});if(error)throw error;history.replaceState(null,'',location.pathname);await enter(data.user)}
-  else{const{data,error}=await sb.auth.signInWithPassword({email:$('#lgEmail').value.trim(),password:$('#lgPass').value});if(error)throw error;await enter(data.user)}
- }catch(x){err(/invalid/i.test(x.message)?'Email ou palavra-passe incorretos.':'Erro: '+x.message)}
- b.disabled=false});
-$('#lgForgot').onclick=async()=>{const em=$('#lgEmail').value.trim();if(!em)return err('Escreva primeiro o seu email.');
- const{error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});err(error?error.message:'Enviámos um email com a ligação para definir a palavra-passe.')};
-document.querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>enter({email:b.dataset.demo=='equipa'?'equipa@aj-aduaneira.demo':'cliente@exemplo.demo'},b.dataset.demo));
-async function logout(){if(live)await sb.auth.signOut();me=null;location.hash='';show('siteView')}
+ setMode('login');show('loginView')};
+async function logout(){if(live)await sb.auth.signOut();location.href=location.pathname}
 $('#cvOut').onclick=logout;
 (function(){const bk=document.querySelector('#adminView .sb-back');const o=bk.cloneNode(true);o.lastChild.textContent='Terminar sessão';o.onclick=logout;o.style.marginTop='10px';bk.after(o)})();
 
 async function enter(user,demoRole){
- let role=demoRole||'cliente';
- if(live){const{data,error}=await sb.from('profiles').select('papel').eq('id',user.id).maybeSingle();if(error){err(error.message);return show('loginView')}role=data?.papel||'cliente'}
- me={email:user.email,role};const nome=user.email.split('@')[0];
- if(role=='equipa'){
-  const f=document.querySelector('#adminView .sb-foot-text');f.innerHTML=`<div class="name">${esc(nome)}</div><div class="role">Equipa AJ</div>`;
-  document.querySelector('#adminView .avatar').textContent=nome.slice(0,2).toUpperCase();
-  show('adminView');switchAdminView('processos',$('#sbnav-processos'));await PM_start();
+ let role=demoRole||'cliente',nome=(user.user_metadata&&user.user_metadata.nome)||user.email.split('@')[0];
+ if(live){const{data,error}=await sb.from('profiles').select('papel,nome').eq('id',user.id).maybeSingle();if(error){setMode('login');show('loginView');return msg(error.message)}role=data&&data.papel||'cliente';nome=data&&data.nome||nome}
+ me={email:user.email,role,nome};
+ ['auPass','auPass2'].forEach(i=>G(i).value='');
+ if(role=='equipa'||role=='admin'){
+  document.querySelector('#adminView .sb-foot-text').innerHTML=`<div class="name">${esc(nome)}</div><div class="role">${role=='admin'?'Administrador':'Equipa AJ'}</div>`;
+  document.querySelector('#adminView .avatar').textContent=nome.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  show('adminView');{const an=$('#sbnav-admin');if(an)an.style.display=role=='admin'?'':'none';if(role=='admin'&&window.AJ_ADMIN_START)AJ_ADMIN_START(me)}switchAdminView('processos',$('#sbnav-processos'));await PM_start();
   if(live&&!window.__rt){window.__rt=1;let t;const re=()=>{clearTimeout(t);t=setTimeout(()=>window.__pm&&window.__pm.reload(),600)};
    sb.channel('aj').on('postgres_changes',{event:'*',schema:'public',table:'processos'},re).on('postgres_changes',{event:'*',schema:'public',table:'colunas'},re).subscribe()}
- }else{$('#cvWho').textContent=user.email;$('#cvHi').textContent='Olá, '+nome.charAt(0).toUpperCase()+nome.slice(1);show('clientView');await loadClient()}}
+ }else{$('#cvWho').textContent=user.email;$('#cvHi').textContent='Olá, '+nome.split(' ')[0];show('clientView');await loadClient()}}
 
 /* ---------- painel do cliente ---------- */
 const DEMO_ROWS=[{num:'0417/26',cliente:'Cliente Demo',mercadoria:'Material de construção',origem:'Dar es Salaam',destino:'Lichinga',prazo:new Date(Date.now()+6*864e5).toISOString().slice(0,10),estado:'Em alfândega',estado_cor:'#3E5C8A',
@@ -1427,11 +1532,78 @@ setInterval(()=>{if(live&&me&&me.role=='cliente'&&document.visibilityState=='vis
 
 /* ---------- arranque ---------- */
 if(live){
- sb.auth.onAuthStateChange(ev=>{if(ev=='PASSWORD_RECOVERY'){loginMode('reset');show('loginView')}});
- if(/type=(invite|recovery)/.test(location.hash)){loginMode('reset');show('loginView')}
+ sb.auth.onAuthStateChange(ev=>{if(ev=='PASSWORD_RECOVERY'){setMode('reset');show('loginView')}});
+ if(/type=(invite|recovery)/.test(location.hash)){setMode('reset');show('loginView')}
+ else if(/type=signup/.test(location.hash)){sb.auth.getSession().then(({data})=>{if(data.session){history.replaceState(null,'',location.pathname);enter(data.session.user)}})}
  sb.auth.getSession().then(({data})=>{if(data.session)$('#portal .btn')&&($('#portal .btn').textContent='Aceder à minha área')})
 }
 const pb=document.querySelector('#portal button');if(pb)pb.textContent='Entrar na área reservada';
+})();
+
+</script>
+<script>
+(function(){
+const sb=window.AJ_SB,live=window.AJ_LIVE,$=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const orig={},LK='aj_site_cfg';let CFG=null,built=false,ME=null,DATA={m:[],c:[]};
+const demoM=[{id:'1',email:'equipa@demo.pt',nome:'Equipa Demo',papel:'equipa'},{id:'2',email:'maria@exemplo.pt',nome:'Maria Cliente',papel:'cliente'}],demoC=[];
+const phone=n=>`+${n.slice(0,3)} ${n.slice(3,5)} ${n.slice(5,8)} ${n.slice(8)}`;
+const hero=()=>{const h=$('#siteView h1');return[h,h&&h.nextElementSibling]};
+const toHtml=t=>esc(t).replace(/\*([^*]+)\*/g,'<em>$1</em>');
+const toMd=h=>h.replace(/<\/?em>/g,'*').replace(/&amp;/g,'&');
+function snap(){const[h,p]=hero();orig.t=h.innerHTML;orig.s=p.innerHTML;orig.wa=[...AJ_CONTACTS.whatsapp];orig.em=[...AJ_CONTACTS.emails]}
+function apply(c){c=c||{};const[h,p]=hero();
+ h.innerHTML=c.titulo?toHtml(c.titulo):orig.t;p.innerHTML=c.sub?esc(c.sub):orig.s;
+ const wa=(c.wa||[]).map(x=>x.replace(/\D/g,'')).filter(Boolean),em=(c.em||[]).map(x=>x.trim()).filter(Boolean);
+ AJ_CONTACTS.whatsapp.splice(0,9,...(wa.length?wa:orig.wa));AJ_CONTACTS.emails.splice(0,9,...(em.length?em:orig.em));
+ const f=$('.wa-float');if(f)f.href=f.href.replace(/wa\.me\/\d+/,'wa.me/'+AJ_CONTACTS.whatsapp[0]);
+ document.querySelectorAll('.contact-line').forEach(l=>{const[a,b]=l.children;if(!a||!b)return;if(/whatsapp/i.test(a.textContent))b.textContent=phone(AJ_CONTACTS.whatsapp[0]);if(/e-?mail/i.test(a.textContent))b.textContent=AJ_CONTACTS.emails[0]});
+ let b=$('#ajBanner');
+ if(c.aviso&&c.aviso.on&&c.aviso.texto){if(!b){b=document.createElement('div');b.id='ajBanner';$('#siteView').prepend(b)}b.innerHTML=`<span>${esc(c.aviso.texto)}</span><button aria-label="Fechar">×</button>`;b.querySelector('button').onclick=()=>b.remove()}else if(b)b.remove()}
+async function loadCfg(){if(!live){try{return JSON.parse(localStorage.getItem(LK))}catch(e){return null}}const{data}=await sb.from('site_config').select('valor').eq('chave','site').maybeSingle();return data&&data.valor}
+async function saveCfg(v){if(!live){localStorage.setItem(LK,JSON.stringify(v));return}const{error}=await sb.from('site_config').upsert({chave:'site',valor:v,atualizado_em:new Date().toISOString()});if(error)throw error}
+const API={
+ async members(){if(!live)return{m:demoM,c:demoC};const[a,b]=await Promise.all([sb.from('profiles').select('id,email,nome,papel').order('criado_em'),sb.from('convites').select('*').order('criado_em')]);if(a.error)throw a.error;if(b.error)throw b.error;return{m:a.data,c:b.data}},
+ async setRole(id,papel){if(!live){demoM.find(x=>x.id==id).papel=papel;return}const{error}=await sb.from('profiles').update({papel}).eq('id',id);if(error)throw error},
+ async invite(email,nome,papel){if(!live){const e=demoM.find(x=>x.email==email);if(e)e.papel=papel;else demoC.push({email,nome,papel});return}const{error}=await sb.from('convites').upsert({email,nome,papel});if(error)throw error},
+ async unInvite(email){if(!live){const i=demoC.findIndex(x=>x.email==email);if(i>-1)demoC.splice(i,1);return}const{error}=await sb.from('convites').delete().eq('email',email);if(error)throw error}};
+const PAP={admin:'Administrador',equipa:'Equipa',cliente:'Cliente'};
+const opts=(v,list)=>list.map(k=>`<option value="${k}" ${k==v?'selected':''}>${k=='cliente'&&list.length>2?'Cliente (sem acesso interno)':PAP[k]}</option>`).join('');
+function status(t,er){const s=$('#admSt');if(s){s.textContent=t;s.className='st'+(er?' er':'');clearTimeout(s._t);if(!er)s._t=setTimeout(()=>s.textContent='',3000)}}
+async function refresh(){try{DATA=await API.members();renderM()}catch(e){status('Erro: '+e.message,1)}}
+function memberRow(u){const self=ME&&u.email==ME.email;return `<div class="rw"><div class="n"><b>${esc(u.nome||u.email)}${self?' (você)':''}</b><small>${esc(u.email)}</small></div><select data-role="${u.id}" ${self?'disabled':''}>${opts(u.papel,['admin','equipa','cliente'])}</select></div>`}
+function renderM(){const eq=DATA.m.filter(u=>u.papel!='cliente'),cl=DATA.m.filter(u=>u.papel=='cliente');
+ $('#admM').innerHTML=`<div class="cd"><h3>Adicionar membro</h3><p class="hn">Escreva o email da pessoa. Quando ela criar conta com esse email, entra automaticamente com o papel escolhido. Se já tiver conta, o papel muda de imediato.</p>
+ <div class="g c3"><label>Nome<input id="inNome" placeholder="Nome (opcional)"></label><label>Email<input id="inEmail" type="email" placeholder="nome@exemplo.com"></label><label>Papel<select id="inPapel"><option value="equipa">Equipa</option><option value="admin">Administrador</option></select></label></div>
+ <p style="margin-top:14px"><button class="bt" data-a="inv">Adicionar membro</button></p></div>
+ <div class="cd"><h3>Equipa (${eq.length})</h3><p class="hn">Administradores gerem membros e o site. A equipa gere processos.</p>${eq.map(memberRow).join('')||'<p class="hn">Ninguém ainda.</p>'}</div>
+ ${DATA.c.length?`<div class="cd"><h3>Convites pendentes (${DATA.c.length})</h3>${DATA.c.map(c=>`<div class="rw"><div class="n"><b>${esc(c.nome||c.email)}</b><small>${esc(c.email)} · ${PAP[c.papel]} · à espera de criar conta</small></div><button class="bt g2" data-un="${esc(c.email)}">Cancelar</button></div>`).join('')}</div>`:''}
+ <div class="cd"><details><summary>Clientes registados (${cl.length})</summary><div style="margin-top:10px">${cl.map(memberRow).join('')||'<p class="hn">Ainda não há clientes.</p>'}</div></details></div>`}
+function renderS(){const c=CFG||{},[h,p]=hero(),w=c.wa||[],e=c.em||[],A=c.aviso||{};
+ $('#admS').innerHTML=`<div class="cd"><h3>Aviso no topo do site</h3><p class="hn">Faixa colorida visível a todos os visitantes (férias, feriados, mudança de horário…).</p>
+ <label class="tg"><input type="checkbox" id="sAvOn" ${A.on?'checked':''}> Mostrar aviso</label><label>Texto<input id="sAv" value="${esc(A.texto||'')}" placeholder="Ex.: Fechados de 24 a 26 de dezembro."></label></div>
+ <div class="cd"><h3>Contactos</h3><p class="hn">Atualiza o botão flutuante de WhatsApp, a secção de contactos e o formulário de cotação. Números só com dígitos e indicativo (ex.: 258865686897).</p>
+ <div class="g c3">${[0,1,2].map(i=>`<label>WhatsApp ${i+1}<input data-wa value="${esc(w[i]??orig.wa[i]??'')}"></label>`).join('')}${[0,1,2].map(i=>`<label>Email ${i+1}<input data-em value="${esc(e[i]??orig.em[i]??'')}"></label>`).join('')}</div></div>
+ <div class="cd"><h3>Texto principal</h3><p class="hn">Use *asteriscos* para destacar palavras a cor.</p>
+ <label>Título<textarea id="sT">${esc(c.titulo??toMd(orig.t))}</textarea></label><label style="margin-top:10px">Subtítulo<textarea id="sS">${esc(c.sub??p.textContent)}</textarea></label></div>
+ <button class="bt" data-a="pub">Publicar alterações</button> <button class="bt g2" data-a="rst">Repor original</button>`}
+function collect(){return{aviso:{on:$('#sAvOn').checked,texto:$('#sAv').value.trim()},wa:[...document.querySelectorAll('[data-wa]')].map(i=>i.value),em:[...document.querySelectorAll('[data-em]')].map(i=>i.value),titulo:$('#sT').value.trim(),sub:$('#sS').value.trim()}}
+function build(){$('#view-admin').innerHTML=`<div id="adm"><div class="tabs"><button data-t="M" class="on">Membros</button><button data-t="S">Site</button><span id="admSt" class="st"></span></div><div id="admM"></div><div id="admS" style="display:none"></div></div>`;
+ $('#adm').addEventListener('click',async e=>{const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.t){document.querySelectorAll('#adm .tabs button').forEach(b=>b.classList.toggle('on',b==t));$('#admM').style.display=t.dataset.t=='M'?'':'none';$('#admS').style.display=t.dataset.t=='S'?'':'none';if(t.dataset.t=='S')renderS();return}
+  try{
+   if(t.dataset.a=='inv'){const em=$('#inEmail').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(em))return status('Email inválido.',1);t.disabled=true;await API.invite(em,$('#inNome').value.trim(),$('#inPapel').value);status('Membro adicionado.');await refresh()}
+   if(t.dataset.un){await API.unInvite(t.dataset.un);await refresh()}
+   if(t.dataset.a=='pub'){const v=collect();await saveCfg(v);CFG=v;apply(v);status('Publicado no site.')}
+   if(t.dataset.a=='rst'){if(!confirm('Repor os textos e contactos originais do site?'))return;await saveCfg({});CFG={};apply({});renderS();status('Original reposto.')}
+  }catch(x){status('Erro: '+x.message,1);t.disabled=false}});
+ $('#adm').addEventListener('change',async e=>{const id=e.target.dataset.role;if(!id)return;
+  if(e.target.value=='cliente'&&!confirm('Retirar o acesso interno a esta pessoa?')){return refresh()}
+  try{await API.setRole(id,e.target.value);status('Papel atualizado.');await refresh()}catch(x){status('Erro: '+x.message,1);refresh()}})}
+window.AJ_ADMIN_START=function(me){ME=me;if(!built){built=true;build()}refresh()};
+document.addEventListener('DOMContentLoaded',()=>{});
+snap();loadCfg().then(c=>{CFG=c;apply(c)}).catch(()=>{});
+if(typeof ADMIN_VIEWS!=='undefined')ADMIN_VIEWS.admin={title:'Administração',sub:'Membros e edição rápida do site'};
 })();
 
 </script>
