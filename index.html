@@ -676,7 +676,58 @@
 .au-or{display:flex;align-items:center;gap:12px;margin:18px 0 4px;font:11px 'IBM Plex Mono',monospace;color:var(--graphite);text-transform:uppercase}.au-or::before,.au-or::after{content:"";flex:1;border-top:1px solid var(--ink-10)}
 #auG{margin-bottom:18px}
 
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{overflow-x:clip}img,video{max-width:100%}
+[data-auth="in"]{display:none!important}
+html[data-logged="1"] [data-auth="out"]{display:none!important}
+html[data-logged="1"] .acct[data-auth="in"]{display:inline-flex!important;align-items:center;justify-content:center}
+html[data-logged="1"] .na-area[data-auth="in"]{display:none!important}
+html[data-logged="1"] .pt-actions[data-auth="in"]{display:flex!important}
+html[data-logged="1"] .vid-btn[data-auth="in"]{display:inline-flex!important}
+@media(min-width:640px){html[data-logged="1"] .na-area[data-auth="in"]{display:inline-flex!important}}
+.nav-in{display:flex;align-items:center;gap:8px}
+#loginView,#clientView{min-height:100dvh}.au{min-height:100dvh}.lg-wrap{min-height:100dvh}
+/* vídeo */
+.vid-sec{padding:26px 0 8px}
+.vid-card{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;background:#0B2630;aspect-ratio:16/9;box-shadow:0 26px 60px rgba(11,38,48,.28);cursor:pointer}
+.vid-media{position:absolute;inset:0}.vid-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2630}
+.vid-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,38,48,0) 38%,rgba(11,38,48,.9) 100%);pointer-events:none}
+.vid-cta{position:absolute;left:0;right:0;bottom:0;padding:clamp(16px,3vw,32px);display:flex;gap:18px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;color:#fff}
+.vid-eb{font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7FE0F2}
+.vid-cta h3{font-size:clamp(22px,3.6vw,34px);letter-spacing:-.02em;margin:5px 0}.vid-cta p{font-size:clamp(13px,1.6vw,15.5px);opacity:.88;max-width:440px;line-height:1.45}
+.vid-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.vid-chips span{font:11px 'IBM Plex Mono',monospace;padding:5px 11px;border-radius:100px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px)}
+.vid-btn{border:0;background:#fff;color:#0B2630;font:700 14.5px inherit;font-family:inherit;padding:14px 26px;border-radius:100px;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;box-shadow:0 8px 24px rgba(0,0,0,.3)}.vid-btn:hover{transform:translateY(-2px)}
+.vid-mute{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(11,38,48,.6);color:#fff;backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.vid-mute .i-on{display:none}.vid-mute.on .i-on{display:block}.vid-mute.on .i-off{display:none}
+.vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-70%);width:68px;height:68px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#0B2630;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:2;pointer-events:none}
+.vid-card.paused .vid-play{display:flex}
+.vid-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:rgba(255,255,255,.85);background:radial-gradient(circle at 25% 20%,#0E4A5C,#0B2630);font:12px 'IBM Plex Mono',monospace;text-align:center;padding:20px}
+.vid-fallback b{font-size:16px}.vid-card.novid .vid-fallback{display:flex}.vid-card.novid .vid-play,.vid-card.novid .vid-mute{display:none}
+@media(max-width:640px){.vid-sec{padding:18px 0 4px}.vid-card{aspect-ratio:auto;border-radius:18px}.vid-media{position:relative;aspect-ratio:16/9}.vid-shade{display:none}.vid-cta{position:static;padding:18px;flex-direction:column;align-items:stretch}.vid-btn{width:100%;text-align:center}.vid-chips{display:none}.vid-play{width:56px;height:56px;transform:translate(-50%,-50%)}}
+/* painel Minha conta */
+#acctPanel{position:fixed;inset:0;z-index:600;visibility:hidden}#acctPanel.on{visibility:visible}
+.ap-shade{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s}#acctPanel.on .ap-shade{opacity:1}
+.ap-box{position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--paper);color:var(--ink);transform:translateX(105%);transition:transform .25s ease;overflow-y:auto;padding:20px 22px calc(40px + env(safe-area-inset-bottom,0px));box-shadow:-20px 0 50px rgba(0,0,0,.25)}
+#acctPanel.on .ap-box{transform:none}
+.ap-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.ap-top b{font-size:18px}.ap-x{border:0;background:var(--ink-10);color:var(--ink);width:36px;height:36px;border-radius:50%;font-size:22px;cursor:pointer;line-height:1}
+.ap-id{display:flex;gap:14px;align-items:center;padding:16px;border-radius:16px;background:var(--amber-10);margin-bottom:14px}
+.ap-av{width:56px;height:56px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font:700 18px 'IBM Plex Mono',monospace;flex-shrink:0}
+.ap-id b{display:block;font-size:16px}.ap-id small{display:block;color:var(--graphite);font-size:12.5px;word-break:break-all;margin:2px 0 6px}.ap-id em{font:600 10px 'IBM Plex Mono',monospace;font-style:normal;background:var(--paper);color:var(--amber);padding:2px 9px;border-radius:100px}
+.ap-sec{border:1px solid var(--ink-10);border-radius:16px;padding:16px;margin-bottom:12px}.ap-sec h4{font:600 11px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--graphite);margin-bottom:12px}
+.ap-sec label{display:block;font-size:12px;color:var(--graphite);margin-bottom:10px}
+.ap-sec input{display:block;width:100%;margin-top:5px;padding:11px 12px;border-radius:10px;border:1px solid var(--ink-20);background:var(--paper);color:var(--ink);font:15px inherit;font-family:inherit}.ap-sec input:focus{outline:0;border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-10)}.ap-sec input:disabled{opacity:.6}
+.ap-n{font-size:12.5px;color:var(--graphite);line-height:1.5;margin-bottom:12px}
+.ap-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.ap-st{font:12px 'IBM Plex Mono',monospace;color:#4C8A64}.ap-st.er{color:#C83C3C}
+.ap-b{border:0;background:var(--ink);color:var(--paper);font:600 13.5px inherit;font-family:inherit;padding:12px 20px;border-radius:100px;cursor:pointer;min-height:44px}.ap-b:disabled{opacity:.5}
+.ap-b.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink-20);display:block;width:100%;margin-bottom:10px;text-align:center}
+.ap-b.red{background:#C83C3C;color:#fff;display:block;width:100%;margin-top:6px}
+
+.nav.wrap{padding:14px clamp(16px,4vw,28px);box-sizing:border-box}
+.grid-two>*,.st2>*{min-width:0}.stat-grid>*{min-width:0}
+@media(max-width:420px){.br{grid-template-columns:minmax(64px,96px) 1fr 24px;gap:8px}}
+
+.vid-cta h3{color:#fff!important}.vid-cta p{color:rgba(255,255,255,.88)!important}
 </style>
+<link rel="preload" as="video" href="aj_adn_vid.mp4" type="video/mp4">
 </head>
 <body>
 
@@ -751,6 +802,20 @@
     Guardar guia em PDF
   </button>
 </div>
+<section id="video" class="vid-sec"><div class="wrap">
+ <div class="vid-card paused" id="vidCard">
+  <div class="vid-media">
+   <video id="ajVid" muted loop playsinline preload="auto" aria-label="Como acompanhar o seu processo aduaneiro"><source src="aj_adn_vid.mp4#t=0.1" type="video/mp4"><source src="aj_adn_vid.webm#t=0.1" type="video/webm"></video>
+   <div class="vid-fallback"><b>aj_adn_vid</b><span>Coloque o vídeo ao lado do index.html</span></div>
+   <button class="vid-play" aria-label="Reproduzir"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+   <button class="vid-mute" id="vidMute" aria-label="Ativar som"><svg class="i-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg><svg class="i-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button>
+  </div>
+  <div class="vid-shade"></div>
+  <div class="vid-cta"><div><span class="vid-eb">Portal do cliente</span><h3>Veja o seu processo</h3><p>Acompanhe cada etapa da sua mercadoria, sem ter de perguntar a ninguém.</p><div class="vid-chips"><span>Estado em tempo real</span><span>O que falta fazer</span><span>Documentos</span></div></div>
+   <button class="vid-btn" id="vidCta" data-auth="out">Veja o seu processo →</button><button class="vid-btn" id="vidArea" data-auth="in">Ir para o meu processo →</button></div>
+ </div>
+</div></section>
+
 
 <div class="trust-strip">
   <div class="wrap trust-grid">
@@ -849,8 +914,9 @@
       <div class="eyebrow">Portal do cliente</div>
       <h2 style="font-size:clamp(22px,5vw,32px);">Cada processo, visível a qualquer momento.</h2>
       <p>Crie a sua conta e acompanhe o estado dos seus processos, o que já foi feito, o que falta e os documentos — sem precisar de perguntar por WhatsApp.</p>
-      <div class="pt-actions"><button class="btn btn-solid btn-round" id="ptSignup">Criar conta</button><button class="btn btn-glass btn-round" id="ptLogin">Iniciar sessão</button></div>
-      <p class="pt-note">Use o mesmo email que nos indicou. Os seus processos aparecem assim que a nossa equipa os associar à sua conta.</p>
+      <div class="pt-actions" data-auth="out"><button class="btn btn-solid btn-round" id="ptSignup">Criar conta</button><button class="btn btn-glass btn-round" id="ptLogin">Iniciar sessão</button></div>
+      <div class="pt-actions" data-auth="in"><button class="btn btn-solid btn-round" id="ptArea">Ir para a minha área</button></div>
+      <p class="pt-note" data-auth="out">Use o mesmo email que nos indicou. Os seus processos aparecem assim que a nossa equipa os associar à sua conta.</p>
     </div>
     <div class="portal-mock reveal">
       <div class="portal-bar"><span></span><span></span><span></span></div>
@@ -1575,13 +1641,13 @@ G('auForm').addEventListener('submit',async e=>{e.preventDefault();msg();
  }catch(x){msg(fail(x))}
  busy(false)});
 G('auGoogle').onclick=async()=>{msg();const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:back(),queryParams:{prompt:'select_account'}}});if(error)msg(/not enabled|unsupported/i.test(error.message)?'O início de sessão com Google ainda não está ativado.':fail(error))};
-window.AJ_OPEN=async m=>{if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}setMode(m);show('loginView')};
+window.AJ_OPEN=async m=>{if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}else if(me)return enter({email:me.email,user_metadata:{nome:me.nome}},me.role);setMode(m);show('loginView')};
 window.showSite=()=>show('siteView');
 window.showAdmin=async()=>{
  if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}
  setMode('login');show('loginView')};
 async function logout(){if(live)await sb.auth.signOut();location.href=location.pathname}
-window.AJ_LOGOUT=logout;
+window.AJ_LOGOUT=logout;window.AJ_LOGOUT_ALL=async()=>{if(live)await sb.auth.signOut({scope:'global'});location.href=location.pathname};
 $('#cvOut').onclick=logout;
 (function(){const bk=document.querySelector('#adminView .sb-back');const o=bk.cloneNode(true);o.lastChild.textContent='Terminar sessão';o.onclick=logout;o.style.marginTop='10px';bk.after(o)})();
 
@@ -1712,16 +1778,17 @@ const menu=document.createElement('div');menu.id='acctMenu';document.body.append
 let ME=null;const ini=n=>(n||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
 const nb=$('#adminView .topbar .new-btn');if(nb){const a=document.createElement('button');a.id='acctBtn';a.className='acct';a.title='A minha conta';nb.after(a)}
 const cvo=G('cvOut');if(cvo){cvo.style.display='none';const a=document.createElement('button');a.id='cvAcct';a.className='acct';a.title='A minha conta';cvo.after(a)}
-document.addEventListener('aj:login',e=>{ME=e.detail;['acctBtn','cvAcct'].forEach(i=>{const b=G(i);if(b)b.textContent=ini(ME.nome)})});
+document.addEventListener('aj:login',e=>{ME=e.detail;['acctBtn','cvAcct','navAcct'].forEach(i=>{const b=G(i);if(b)b.textContent=ini(ME.nome)})});
 function openMenu(btn){const r=btn.getBoundingClientRect();
- menu.innerHTML=`<div class="am-h"><b>${esc(ME.nome)}</b><small>${esc(ME.email)}</small><em>${ME.role=='admin'?'Administrador':ME.role=='equipa'?'Equipa AJ':'Cliente'}</em></div><button data-m="site">Ver o site público</button>${ME.role!='cliente'?'<button data-m="def">Definições</button>':''}<button data-m="out" class="red">Terminar sessão</button>`;
+ menu.innerHTML=`<div class="am-h"><b>${esc(ME.nome)}</b><small>${esc(ME.email)}</small><em>${ME.role=='admin'?'Administrador':ME.role=='equipa'?'Equipa AJ':'Cliente'}</em></div><button data-m="acc">Minha conta</button>${document.getElementById('siteView').style.display!=='none'?'<button data-m="area">A minha área</button>':'<button data-m="site">Ver o site público</button>'}${ME.role!='cliente'?'<button data-m="def">Definições</button>':''}<button data-m="out" class="red">Terminar sessão</button>`;
  menu.style.display='block';const w=menu.offsetWidth,hh=menu.offsetHeight;
  menu.style.left=Math.min(Math.max(8,r.right-w),innerWidth-w-8)+'px';let top=r.bottom+8;if(top+hh>innerHeight-8)top=Math.max(8,r.top-hh-8);menu.style.top=top+'px'}
 document.addEventListener('click',e=>{
- const b=e.target.closest('#acctBtn,#cvAcct,#adminView .sb-foot');
+ if(e.target.closest('#adminView .sb-foot')&&ME){e.stopPropagation();menu.style.display='none';AJ_ACCOUNT_OPEN();return}
+ const b=e.target.closest('#acctBtn,#cvAcct,#navAcct');
  if(b&&ME){e.stopPropagation();if(menu.style.display=='block')menu.style.display='none';else openMenu(b);return}
  const m=e.target.closest('#acctMenu [data-m]');
- if(m){menu.style.display='none';const k=m.dataset.m;if(k=='site')showSite();if(k=='def')switchAdminView('definicoes',G('sbnav-definicoes'));if(k=='out'&&confirm('Terminar a sessão?'))AJ_LOGOUT();return}
+ if(m){menu.style.display='none';const k=m.dataset.m;if(k=='site')showSite();if(k=='acc')AJ_ACCOUNT_OPEN();if(k=='area')AJ_OPEN('login');if(k=='def')switchAdminView('definicoes',G('sbnav-definicoes'));if(k=='out'&&confirm('Terminar a sessão?'))AJ_LOGOUT();return}
  if(!e.target.closest('#acctMenu'))menu.style.display='none'},true);
 document.addEventListener('keydown',e=>{if(e.key=='Escape')menu.style.display='none'});
 /* ----- novas abas do administrador ----- */
@@ -1753,17 +1820,79 @@ document.addEventListener('click',async e=>{const t=e.target.closest('[data-x]')
 })();
 
 </script>
+
 <script>
 (function(){
-const $=s=>document.querySelector(s);
-const na=document.createElement('div');na.className='nav-auth';
+const live=window.AJ_LIVE,sb=window.AJ_SB;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ini=n=>(n||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const P=document.createElement('div');P.id='acctPanel';P.innerHTML='<div class="ap-shade"></div><aside class="ap-box" role="dialog" aria-modal="true" aria-label="A minha conta"></aside>';document.body.appendChild(P);
+const box=P.querySelector('.ap-box'),ROLE={admin:'Administrador',equipa:'Equipa AJ',cliente:'Cliente'};
+let ME=null,tel='';
+const say=(id,t,er)=>{const e=document.getElementById(id);if(e){e.textContent=t;e.className='ap-st'+(er?' er':'')}};
+async function open(){ME=window.AJ_ME;if(!ME)return;tel='';
+ if(live){try{const{data:{user}}=await sb.auth.getUser();const{data}=await sb.from('profiles').select('nome,telefone').eq('id',user.id).maybeSingle();if(data){ME.nome=data.nome||ME.nome;tel=data.telefone||''}}catch(e){}}
+ else tel=localStorage.getItem('aj_demo_tel')||'';
+ render();P.classList.add('on');document.body.style.overflow='hidden'}
+function close(){P.classList.remove('on');document.body.style.overflow=''}
+function render(){box.innerHTML=`<div class="ap-top"><b>A minha conta</b><button class="ap-x" data-ap="close" aria-label="Fechar">×</button></div>
+ <div class="ap-id"><span class="ap-av">${esc(ini(ME.nome))}</span><div><b>${esc(ME.nome)}</b><small>${esc(ME.email)}</small><em>${ROLE[ME.role]||'Cliente'}</em></div></div>
+ <section class="ap-sec"><h4>Dados pessoais</h4><label>Nome<input id="apNome" value="${esc(ME.nome)}" autocomplete="name"></label><label>Telefone / WhatsApp<input id="apTel" type="tel" value="${esc(tel)}" placeholder="+258 …" autocomplete="tel"></label><label>Email<input value="${esc(ME.email)}" disabled></label><div class="ap-row"><button class="ap-b" data-ap="save">Guardar alterações</button><span id="apS1" class="ap-st"></span></div></section>
+ <section class="ap-sec"><h4>Palavra-passe</h4><p class="ap-n">Se entrou com o Google, pode também definir uma palavra-passe para entrar com o email.</p><label>Nova palavra-passe<input id="apP1" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"></label><label>Confirmar<input id="apP2" type="password" autocomplete="new-password"></label><div class="ap-row"><button class="ap-b" data-ap="pass">Alterar palavra-passe</button><span id="apS2" class="ap-st"></span></div></section>
+ <section class="ap-sec"><h4>Os meus dados</h4><p class="ap-n">Pode pedir à nossa equipa para corrigir ou eliminar os seus dados.</p><button class="ap-b ghost" data-ap="del">Pedir eliminação dos meus dados</button></section>
+ <section class="ap-sec"><h4>Sessão</h4><button class="ap-b ghost" data-ap="all">Terminar sessão em todos os dispositivos</button><button class="ap-b red" data-ap="out">Terminar sessão</button></section>`}
+function refreshName(){const n=ME.nome;window.AJ_ME.nome=n;document.dispatchEvent(new CustomEvent('aj:login',{detail:window.AJ_ME}));
+ const f=document.querySelector('#adminView .sb-foot-text .name');if(f)f.textContent=n;const a=document.querySelector('#adminView .avatar');if(a)a.textContent=ini(n);
+ const hi=document.getElementById('cvHi');if(hi&&ME.role=='cliente')hi.textContent='Olá, '+n.split(' ')[0]}
+box.addEventListener('click',async e=>{const b=e.target.closest('[data-ap]');if(!b)return;const k=b.dataset.ap;
+ if(k=='close')return close();
+ if(k=='save'){const nome=document.getElementById('apNome').value.trim(),t=document.getElementById('apTel').value.trim();if(nome.length<2)return say('apS1','Indique o seu nome.',1);b.disabled=true;
+  try{if(live){const{error}=await sb.rpc('atualizar_perfil',{p_nome:nome,p_telefone:t});if(error)throw error}else localStorage.setItem('aj_demo_tel',t);ME.nome=nome;tel=t;refreshName();say('apS1','Guardado.')}catch(x){say('apS1','Erro: '+x.message,1)}b.disabled=false;return}
+ if(k=='pass'){const p1=document.getElementById('apP1').value,p2=document.getElementById('apP2').value;if(p1.length<8)return say('apS2','Mínimo 8 caracteres.',1);if(p1!==p2)return say('apS2','As palavras-passe não coincidem.',1);b.disabled=true;
+  try{if(live){const{error}=await sb.auth.updateUser({password:p1});if(error)throw error}document.getElementById('apP1').value=document.getElementById('apP2').value='';say('apS2','Palavra-passe alterada.')}catch(x){say('apS2','Erro: '+x.message,1)}b.disabled=false;return}
+ if(k=='del'){const w=(window.AJ_CONTACTS&&AJ_CONTACTS.whatsapp[0])||'';window.open('https://wa.me/'+w+'?text='+encodeURIComponent('Olá! Gostaria de pedir a correção/eliminação dos meus dados na AJ Aduaneira. Email da conta: '+ME.email),'_blank','noopener');return}
+ if(k=='all'){if(confirm('Terminar a sessão em todos os dispositivos?'))AJ_LOGOUT_ALL();return}
+ if(k=='out'){if(confirm('Terminar a sessão?'))AJ_LOGOUT()}});
+P.querySelector('.ap-shade').onclick=close;document.addEventListener('keydown',e=>{if(e.key=='Escape'&&P.classList.contains('on'))close()});
+window.AJ_ACCOUNT_OPEN=open;
+})();
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s),H=document.documentElement;
+const na=document.createElement('div');na.className='nav-auth';na.dataset.auth='out';
 na.innerHTML='<button class="na-login" id="naLogin"><span class="l-long">Iniciar sessão</span><span class="l-short">Entrar</span></button><button class="btn btn-solid btn-round na-signup" id="naSignup">Criar conta</button>';
-const cta=document.querySelector('.nav-right > a.btn-glass');if(cta)cta.before(na);else document.querySelector('.nav-right').prepend(na);
+const inn=document.createElement('div');inn.className='nav-in';
+inn.innerHTML='<button class="btn btn-solid btn-round na-area" id="naArea" data-auth="in">A minha área</button><button class="acct" id="navAcct" data-auth="in" title="A minha conta" aria-label="A minha conta"></button>';
+const cta=document.querySelector('.nav-right > a.btn-glass'),nr=document.querySelector('.nav-right');
+if(cta){cta.before(na);cta.before(inn)}else{nr.prepend(inn);nr.prepend(na)}
 const open=m=>window.AJ_OPEN?AJ_OPEN(m):showAdmin();
-$('#naLogin').onclick=()=>open('login');$('#naSignup').onclick=()=>open('signup');
-const pl=$('#ptLogin'),ps=$('#ptSignup');if(pl)pl.onclick=()=>open('login');if(ps)ps.onclick=()=>open('signup');
-function logged(on){const b=$('#naLogin');b.innerHTML=on?'<span class="l-long">A minha área</span><span class="l-short">A minha área</span>':'<span class="l-long">Iniciar sessão</span><span class="l-short">Entrar</span>';$('#naSignup').style.display=on?'none':'';if(ps)ps.style.display=on?'none':'';if(pl)pl.textContent=on?'Ir para a minha área':'Iniciar sessão'}
-if(window.AJ_SB){AJ_SB.auth.getSession().then(({data})=>logged(!!data.session));AJ_SB.auth.onAuthStateChange((e,s)=>logged(!!s))}
+const on=(id,m)=>{const e=document.getElementById(id);if(e)e.onclick=()=>open(m)};
+on('naLogin','login');on('naSignup','signup');on('ptLogin','login');on('ptSignup','signup');on('ptArea','login');on('naArea','login');on('vidCta','signup');on('vidArea','login');
+const logged=v=>{if(v)H.dataset.logged='1';else H.removeAttribute('data-logged')};
+document.addEventListener('aj:login',()=>logged(true));
+async function loadMe(){if(!window.AJ_SB)return;const{data:{session}}=await AJ_SB.auth.getSession();if(!session){logged(false);return}
+ const u=session.user,md=u.user_metadata||{};let nome=md.nome||md.full_name||md.name||u.email.split('@')[0],role='cliente';
+ const{data}=await AJ_SB.from('profiles').select('papel,nome').eq('id',u.id).maybeSingle();if(data){role=data.papel||role;nome=data.nome||nome}
+ window.AJ_ME={email:u.email,role,nome};logged(true);document.dispatchEvent(new CustomEvent('aj:login',{detail:window.AJ_ME}))}
+if(window.AJ_SB){loadMe();AJ_SB.auth.onAuthStateChange((e,s)=>{if(e=='SIGNED_OUT')logged(false);else if(s&&!window.AJ_ME)loadMe()})}
+})();
+
+</script>
+<script>
+(function(){
+const v=document.getElementById('ajVid'),card=document.getElementById('vidCard');if(!v)return;
+const rm=matchMedia('(prefers-reduced-motion: reduce)').matches,sd=navigator.connection&&navigator.connection.saveData;
+v.preload=sd?'metadata':'auto';if(!sd){try{v.load()}catch(e){}}
+let manual=false,vis=false;const upd=()=>card.classList.toggle('paused',v.paused);
+v.addEventListener('play',upd);v.addEventListener('pause',upd);upd();
+v.addEventListener('error',()=>setTimeout(()=>{if(v.networkState===3||v.error)card.classList.add('novid')},0),true);
+const play=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};
+new IntersectionObserver(es=>es.forEach(en=>{vis=en.isIntersecting&&en.intersectionRatio>=.35;if(vis&&!manual&&!rm)play();else if(!vis)v.pause()}),{threshold:[0,.35,.6]}).observe(card);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)v.pause();else if(vis&&!manual&&!rm)play()});
+card.addEventListener('click',e=>{if(e.target.closest('.vid-btn,.vid-mute'))return;if(v.paused){manual=false;play()}else{manual=true;v.pause()}});
+const m=document.getElementById('vidMute');m.onclick=()=>{v.muted=!v.muted;m.setAttribute('aria-label',v.muted?'Ativar som':'Silenciar');m.classList.toggle('on',!v.muted);if(!v.muted&&v.paused)play()};
 })();
 
 </script>
