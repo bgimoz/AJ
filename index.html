@@ -664,6 +664,18 @@
 .st2 .notes-card{margin-bottom:0}.st2{gap:16px}
 .client-row.cr:hover{background:var(--amber-10)}
 
+.nav-auth{display:flex;align-items:center;gap:8px}
+.na-login{border:1.5px solid var(--ink-20);background:none;color:var(--ink);font:600 13.5px inherit;font-family:inherit;padding:9px 16px;border-radius:100px;cursor:pointer;white-space:nowrap}
+.na-login:hover{border-color:var(--amber);color:var(--amber)}
+.na-login .l-long{display:none}.na-signup{display:none!important}
+.nav-right>a.btn-glass{display:none}
+@media(min-width:640px){.na-login .l-long{display:inline}.na-login .l-short{display:none}.na-signup{display:inline-flex!important}.nav-right>a.btn-glass{display:inline-flex}}
+.pt-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 10px}.pt-note{font-size:12.5px;color:var(--graphite);line-height:1.5;max-width:420px}
+.au-g{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:100px;border:1.5px solid var(--ink-20);background:var(--paper);color:var(--ink);font:600 14px inherit;font-family:inherit;cursor:pointer;transition:border-color .15s,transform .15s}
+.au-g:hover{border-color:var(--amber);transform:translateY(-1px)}
+.au-or{display:flex;align-items:center;gap:12px;margin:18px 0 4px;font:11px 'IBM Plex Mono',monospace;color:var(--graphite);text-transform:uppercase}.au-or::before,.au-or::after{content:"";flex:1;border-top:1px solid var(--ink-10)}
+#auG{margin-bottom:18px}
+
 </style>
 </head>
 <body>
@@ -836,8 +848,9 @@
     <div class="portal-copy reveal">
       <div class="eyebrow">Portal do cliente</div>
       <h2 style="font-size:clamp(22px,5vw,32px);">Cada processo, visível a qualquer momento.</h2>
-      <p>Em breve: acompanhe o estado dos seus processos sem precisar de perguntar por WhatsApp.</p>
-      <button class="btn btn-glass btn-round" onclick="showAdmin()">Ver o painel interno</button>
+      <p>Crie a sua conta e acompanhe o estado dos seus processos, o que já foi feito, o que falta e os documentos — sem precisar de perguntar por WhatsApp.</p>
+      <div class="pt-actions"><button class="btn btn-solid btn-round" id="ptSignup">Criar conta</button><button class="btn btn-glass btn-round" id="ptLogin">Iniciar sessão</button></div>
+      <p class="pt-note">Use o mesmo email que nos indicou. Os seus processos aparecem assim que a nossa equipa os associar à sua conta.</p>
     </div>
     <div class="portal-mock reveal">
       <div class="portal-bar"><span></span><span></span><span></span></div>
@@ -977,6 +990,7 @@
   <div class="au-logo m">AJ Aduaneira</div>
   <div class="au-tabs" id="auTabs"><button type="button" data-m="login" class="on">Iniciar sessão</button><button type="button" data-m="signup">Criar conta</button></div>
   <h1 id="auH"></h1><p class="au-p" id="auP"></p>
+  <div id="auG"><button type="button" class="au-g" id="auGoogle"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.4-4.7 7l7.3 5.7c4.3-4 6.8-9.9 6.8-17.2z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.3-5.7c-2 1.4-4.6 2.3-8.6 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>Continuar com o Google</button><div class="au-or"><span>ou com email</span></div></div>
   <form id="auForm" novalidate>
    <div class="fl" id="fName"><label for="auName">Nome completo</label><input id="auName" autocomplete="name" placeholder="O seu nome"></div>
    <div class="fl" id="fEmail"><label for="auEmail">Email</label><input type="email" id="auEmail" autocomplete="email" placeholder="nome@exemplo.com"></div>
@@ -1519,7 +1533,7 @@ function setMode(m){mode=m;const c=COPY[m],on=(id,v)=>G(id).style.display=v?'':'
  G('auPassL').textContent=m=='reset'?'Nova palavra-passe':'Palavra-passe';G('auPass').autocomplete=m=='login'?'current-password':'new-password';
  document.querySelectorAll('#auTabs button').forEach(b=>b.classList.toggle('on',b.dataset.m==m));
  G('auAlt').innerHTML=m=='forgot'?'<a data-m="login">← Voltar a iniciar sessão</a>':m=='login'?'Ainda não tem conta? <a data-m="signup">Criar conta</a>':m=='signup'?'Já tem conta? <a data-m="login">Iniciar sessão</a>':'';
- G('lgDemo').style.display=live?'none':'block';msg();meter();
+ G('lgDemo').style.display=live?'none':'block';G('auG').style.display=live&&(m=='login'||m=='signup')?'':'none';msg();meter();
  setTimeout(()=>G(m=='signup'?'auName':m=='reset'?'auPass':'auEmail').focus(),60)}
 const loginMode=setMode;
 function fail(x){const t=(x&&x.message||'').toLowerCase();
@@ -1560,6 +1574,8 @@ G('auForm').addEventListener('submit',async e=>{e.preventDefault();msg();
   else{const{data,error}=await sb.auth.updateUser({password:pw});if(error)throw error;history.replaceState(null,'',location.pathname);await enter(data.user)}
  }catch(x){msg(fail(x))}
  busy(false)});
+G('auGoogle').onclick=async()=>{msg();const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:back(),queryParams:{prompt:'select_account'}}});if(error)msg(/not enabled|unsupported/i.test(error.message)?'O início de sessão com Google ainda não está ativado.':fail(error))};
+window.AJ_OPEN=async m=>{if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}setMode(m);show('loginView')};
 window.showSite=()=>show('siteView');
 window.showAdmin=async()=>{
  if(live){const{data}=await sb.auth.getSession();if(data.session)return enter(data.session.user)}
@@ -1607,10 +1623,10 @@ setInterval(()=>{if(live&&me&&me.role=='cliente'&&document.visibilityState=='vis
 if(live){
  sb.auth.onAuthStateChange(ev=>{if(ev=='PASSWORD_RECOVERY'){setMode('reset');show('loginView')}});
  if(/type=(invite|recovery)/.test(location.hash)){setMode('reset');show('loginView')}
- else if(/type=signup/.test(location.hash)){sb.auth.getSession().then(({data})=>{if(data.session){history.replaceState(null,'',location.pathname);enter(data.session.user)}})}
- sb.auth.getSession().then(({data})=>{if(data.session)$('#portal .btn')&&($('#portal .btn').textContent='Aceder à minha área')})
+ else if(/type=signup|access_token=/.test(location.hash)){sb.auth.getSession().then(({data})=>{if(data.session){history.replaceState(null,'',location.pathname);enter(data.session.user)}})}
+ 
 }
-const pb=document.querySelector('#portal button');if(pb)pb.textContent='Entrar na área reservada';
+
 })();
 
 </script>
@@ -1633,7 +1649,7 @@ function apply(c){c=c||{};const[h,p]=hero();
  document.querySelectorAll('.contact-line').forEach(l=>{const[a,b]=l.children;if(!a||!b)return;if(/whatsapp/i.test(a.textContent))b.textContent=phone(AJ_CONTACTS.whatsapp[0]);if(/e-?mail/i.test(a.textContent))b.textContent=AJ_CONTACTS.emails[0]});
  {const rs=document.documentElement.style;if(c.cor){rs.setProperty('--amber',c.cor);rs.setProperty('--amber-10',c.cor+'1F')}else{rs.removeProperty('--amber');rs.removeProperty('--amber-10')}
  document.querySelectorAll('img.brand-mark').forEach(im=>{if(!im.dataset.o)im.dataset.o=im.src;im.src=c.logo||im.dataset.o});document.documentElement.classList.toggle('logo-custom',!!c.logo);
- let mt=$('#ajMaint');if(c.manut&&c.manut.on){if(!mt){mt=document.createElement('div');mt.id='ajMaint';$('#siteView').appendChild(mt)}mt.innerHTML=`<div><h2>${esc(c.manut.texto||'Voltamos em breve.')}</h2><a onclick="showAdmin()">Área reservada</a></div>`}else if(mt)mt.remove()}
+ let mt=$('#ajMaint');if(c.manut&&c.manut.on){if(!mt){mt=document.createElement('div');mt.id='ajMaint';$('#siteView').appendChild(mt)}mt.innerHTML=`<div><h2>${esc(c.manut.texto||'Voltamos em breve.')}</h2><a onclick="showAdmin()">Iniciar sessão</a></div>`}else if(mt)mt.remove()}
  let b=$('#ajBanner');
  if(c.aviso&&c.aviso.on&&c.aviso.texto){if(!b){b=document.createElement('div');b.id='ajBanner';$('#siteView').prepend(b)}b.innerHTML=`<span>${esc(c.aviso.texto)}</span><button aria-label="Fechar">×</button>`;b.querySelector('button').onclick=()=>b.remove()}else if(b)b.remove()}
 async function loadCfg(){if(!live){try{return JSON.parse(localStorage.getItem(LK))}catch(e){return null}}const{data}=await sb.from('site_config').select('valor').eq('chave','site').maybeSingle();return data&&data.valor}
@@ -1734,6 +1750,20 @@ document.addEventListener('click',async e=>{const t=e.target.closest('[data-x]')
  if(k=='nocor'){DR.cor='';G('xCor').value='#0BA5C7'}
  if(k=='csv')__pm.csv(true);if(k=='json')__pm.json();
  if(k=='pubA'){try{await AJ_SITE.save({...AJ_SITE.get(),logo:DR.logo,cor:DR.cor,manut:{on:G('xMOn').checked,texto:G('xMT').value.trim()}});st('Aparência publicada.')}catch(x){st('Erro: '+x.message)}}});
+})();
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const na=document.createElement('div');na.className='nav-auth';
+na.innerHTML='<button class="na-login" id="naLogin"><span class="l-long">Iniciar sessão</span><span class="l-short">Entrar</span></button><button class="btn btn-solid btn-round na-signup" id="naSignup">Criar conta</button>';
+const cta=document.querySelector('.nav-right > a.btn-glass');if(cta)cta.before(na);else document.querySelector('.nav-right').prepend(na);
+const open=m=>window.AJ_OPEN?AJ_OPEN(m):showAdmin();
+$('#naLogin').onclick=()=>open('login');$('#naSignup').onclick=()=>open('signup');
+const pl=$('#ptLogin'),ps=$('#ptSignup');if(pl)pl.onclick=()=>open('login');if(ps)ps.onclick=()=>open('signup');
+function logged(on){const b=$('#naLogin');b.innerHTML=on?'<span class="l-long">A minha área</span><span class="l-short">A minha área</span>':'<span class="l-long">Iniciar sessão</span><span class="l-short">Entrar</span>';$('#naSignup').style.display=on?'none':'';if(ps)ps.style.display=on?'none':'';if(pl)pl.textContent=on?'Ir para a minha área':'Iniciar sessão'}
+if(window.AJ_SB){AJ_SB.auth.getSession().then(({data})=>logged(!!data.session));AJ_SB.auth.onAuthStateChange((e,s)=>logged(!!s))}
 })();
 
 </script>
