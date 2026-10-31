@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal do cliente — AJ Aduaneira</title>
+<meta name="description" content="Despacho aduaneiro, documentação e conformidade para importação e exportação em Lichinga, Niassa. Processos claros, sem surpresas.">
+<meta property="og:title" content="AJ Aduaneira — Despacho aduaneiro em Lichinga">
+<meta property="og:description" content="A sua carga, documentada e acompanhada do início ao fim. Peça uma cotação em minutos.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B2630">
+<link rel="icon" type="image/png" href="assets/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/site-extras.css">
+<link rel="stylesheet" href="css/pm.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/video.css">
+<link rel="stylesheet" href="css/account.css">
+<link rel="stylesheet" href="css/overrides.css">
+<link rel="stylesheet" href="css/ux.css">
+<link rel="preload" as="video" href="aj_adn_vid.mp4" type="video/mp4">
+<script src="js/ui-state.js"></script>
+</head>
+<body>
+
+<a href="#conteudo" class="skip-link">Saltar para o conteúdo</a>
+
+<div id="siteView"><div hidden><h1></h1><p></p></div>
+
+<div class="cta-bar" id="ctaBar">
+  <div class="cta-bar-inner">
+    <div class="cta-bar-text">AJ Serviços LDA<span>— peça a sua cotação em minutos</span></div>
+    <a href="contacto.html" class="btn btn-solid btn-round" style="padding:9px 18px; font-size:12px;">Pedir cotação</a>
+  </div>
+</div>
+
+<a class="wa-float print-hide" href="https://wa.me/258865686897?text=Ol%C3%A1%2C%20gostaria%20de%20pedir%20uma%20cota%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Contactar via WhatsApp" title="Contactar via WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.9c1.8 1 3.9 1.5 6.3 1.5 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2.1 0-4-.6-5.6-1.6l-.4-.2-4.6 1.2 1.2-4.5-.3-.4C5.2 17.6 4.6 16.3 4.6 15 4.6 8.9 9.8 4 16 4s11.4 4.9 11.4 11-5.6 9.8-11.4 9.8zm6.1-7.6c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.3 5.2 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+</a><header>
+  <div class="wrap nav">
+    <div class="brand"><img class="brand-mark" src="assets/img/logo.png" alt="AJ Serviços Lda"/>AJ Serviços LDA</div>
+    <nav class="navlinks" aria-label="Principal"><a href="index.html">Início</a><a href="servicos.html">Serviços</a><a href="como-funciona.html">Como funciona</a><a href="portal.html">Portal</a><a href="contacto.html">Contacto</a></nav>
+    <div class="nav-right">
+      
+      <a href="contacto.html" class="btn btn-glass btn-round">Pedir cotação</a>
+      
+    </div>
+  </div>
+</header>
+
+<main id="conteudo"><section id="portal">
+  <div class="wrap portal-grid">
+    <div class="portal-copy reveal">
+      <div class="eyebrow">Portal do cliente</div>
+      <h1 style="font-size:clamp(22px,5vw,32px);">Cada processo, visível a qualquer momento.</h1>
+      <p>Crie a sua conta e acompanhe o estado dos seus processos, o que já foi feito, o que falta e os documentos — sem precisar de perguntar por WhatsApp.</p>
+      <div class="pt-actions" data-auth="out"><button class="btn btn-solid btn-round" id="ptSignup">Criar conta</button><button class="btn btn-glass btn-round" id="ptLogin">Iniciar sessão</button></div>
+      <div class="pt-actions" data-auth="in"><button class="btn btn-solid btn-round" id="ptArea">Ir para a minha área</button></div>
+      <p class="pt-note" data-auth="out">Use o mesmo email que nos indicou. Os seus processos aparecem assim que a nossa equipa os associar à sua conta.</p>
+    </div>
+    <div class="portal-mock reveal">
+      <div class="portal-bar"><span></span><span></span><span></span></div>
+      <div class="portal-table" id="portalTable">
+        <div class="portal-table-row head"><span>Cliente</span><span>Carga</span><span>Estado</span></div>
+        <div class="portal-table-row"><span>Etana, Lda</span><span>Construção</span><span class="tag progress">Em alfândega</span></div>
+        <div class="portal-table-row"><span>N. Comercial</span><span>Electrónica</span><span class="tag pending">Doc. pendente</span></div>
+        <div class="portal-table-row"><span>Casa Muendo</span><span>Mobiliário</span><span class="tag done">Concluído</span></div>
+        <div class="portal-table-row"><span>Grupo Vale</span><span>Maquinaria</span><span class="tag progress">Em trânsito</span></div>
+      </div>
+    </div>
+  </div>
+</section><section class="next"><div class="wrap"><div class="next-card"><div><b>Ainda sem processo aberto?</b><p>Peça uma cotação e abrimos o seu processo no mesmo dia.</p></div><a class="btn btn-solid btn-round" href="contacto.html">Pedir cotação</a></div></div></section></main><footer><div class="wrap footer-row"><span>AJ Aduaneira — Agência Aduaneira</span><nav class="flinks" aria-label="Rodapé"><a href="servicos.html">Serviços</a><a href="como-funciona.html">Como funciona</a><a href="portal.html">Portal</a><a href="contacto.html">Contacto</a></nav><span class="mono">Niassa, Moçambique</span></div></footer>
+</div>
+
+<div id="loginView"><div class="au">
+ <aside class="au-side">
+  <div class="au-logo">AJ Serviços LDA</div>
+  <div class="au-hero"><h2>Cada processo aduaneiro, do início à libertação da carga.</h2>
+   <ul><li><i>✓</i><span><b>Acompanhe em tempo real</b>Veja em que fase está o seu processo, sem ter de ligar.</span></li>
+   <li><i>✓</i><span><b>Saiba o que falta</b>Passos concluídos e pendentes, sempre claros.</span></li>
+   <li><i>✓</i><span><b>Privado e seguro</b>Cada cliente vê apenas os seus processos.</span></li></ul></div>
+  <div class="au-foot">Lichinga · Niassa · Moçambique</div>
+ </aside>
+ <main class="au-main"><div class="au-box">
+  <button type="button" class="lg-back" onclick="showSite()">← Voltar ao site</button>
+  <div class="au-logo m">AJ Serviços LDA</div>
+  <div class="au-tabs" id="auTabs"><button type="button" data-m="login" class="on">Iniciar sessão</button><button type="button" data-m="signup">Criar conta</button></div>
+  <h1 id="auH"></h1><p class="au-p" id="auP"></p>
+  <div id="auG"><button type="button" class="au-g" id="auGoogle"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.4-4.7 7l7.3 5.7c4.3-4 6.8-9.9 6.8-17.2z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.3-5.7c-2 1.4-4.6 2.3-8.6 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>Continuar com o Google</button><div class="au-or"><span>ou com email</span></div></div>
+  <form id="auForm" novalidate>
+   <div class="fl" id="fName"><label for="auName">Nome completo</label><input id="auName" autocomplete="name" placeholder="O seu nome"></div>
+   <div class="fl" id="fEmail"><label for="auEmail">Email</label><input type="email" id="auEmail" autocomplete="email" placeholder="nome@exemplo.com"></div>
+   <div class="fl" id="fPass"><label for="auPass" id="auPassL">Palavra-passe</label><div class="pw"><input type="password" id="auPass" placeholder="••••••••"><button type="button" id="auEye">Mostrar</button></div>
+    <div class="meter" id="auMeter"><b><i></i></b><span></span></div></div>
+   <div class="fl" id="fPass2"><label for="auPass2">Confirmar palavra-passe</label><input type="password" id="auPass2" autocomplete="new-password" placeholder="Repita a palavra-passe"></div>
+   <label class="au-ck" id="fTerms"><input type="checkbox" id="auTerms"><span>Li e aceito os termos de utilização e a política de privacidade.</span></label>
+   <div class="au-row" id="fRow"><a href="#" id="auForgot" data-m="forgot">Esqueci-me da palavra-passe</a></div>
+   <div class="au-err" id="auErr" role="alert" aria-live="polite"></div>
+   <button class="au-btn" id="auBtn"><span>Entrar</span></button>
+  </form>
+  <div id="auDone" hidden></div>
+  <p class="au-alt" id="auAlt"></p>
+  <div class="au-demo" id="lgDemo"><b>Modo de demonstração</b> · o Supabase ainda não está ligado. Use <code>equipa@demo.pt</code> para ver o painel interno, <code>admin@demo.pt</code> para a administração, ou qualquer outro email para o painel do cliente.</div>
+ </div></main>
+</div></div>
+<div id="clientView">
+ <div class="cv-head"><div class="lg-brand">AJ Serviços LDA</div><div><span id="cvWho"></span><button class="cv-out" id="cvOut">Terminar sessão</button></div></div>
+ <div class="cv-main"><h1 id="cvHi"></h1><p class="cv-sub">Acompanhe aqui o estado dos seus processos, o que já foi feito e o que falta.</p><div id="cvList"></div></div>
+</div>
+<div id="ajSync"></div>
+<div id="adminView">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sb-brand"><img class="brand-mark" src="assets/img/logo.png" alt="AJ Serviços Lda" style="width:28px;height:28px;"/>AJ Serviços LDA</div>
+      <nav class="sb-nav">
+        <div class="sb-item active" id="sbnav-processos" onclick="switchAdminView('processos', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Processos</div>
+        <div class="sb-item" id="sbnav-clientes" onclick="switchAdminView('clientes', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Clientes</div>
+        <div class="sb-item" id="sbnav-documentos" onclick="switchAdminView('documentos', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Documentos</div>
+        <div class="sb-item" id="sbnav-relatorios" onclick="switchAdminView('relatorios', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 17V9M13 17V5M8 17v-3"></path></svg>Relatórios</div>
+        <div class="sb-item" id="sbnav-definicoes" onclick="switchAdminView('definicoes', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Definições</div>
+        <div class="sb-item" id="sbnav-admin" style="display:none" onclick="switchAdminView('admin', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>Administração</div>
+      </nav>
+      <div class="sb-back" onclick="showSite()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Voltar ao site
+      </div>
+      <div class="sb-foot">
+        <div class="avatar">JM</div>
+        <div class="sb-foot-text"><div class="name">João Massinga</div><div class="role">Agente aduaneiro</div></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div><h1 id="topbarTitle">Processos</h1><div class="sub" id="topbarSub">9 activos · actualizado agora mesmo</div></div>
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" placeholder="Procurar processo ou cliente">
+        </div>
+        <button class="new-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Novo processo</button>
+      </div>
+
+      <div class="content">
+        <div class="admin-view" id="view-processos"></div>
+
+        <div class="admin-view" id="view-clientes" style="display:none;">
+          <div class="notes-card">
+            <div class="divider-note" style="margin-top:0;"><span class="label">Base de clientes</span><div class="line"></div></div>
+            <div class="client-row client-row-head">
+              <span>Cliente</span><span>Contacto</span><span>Processos</span><span>Estado</span>
+            </div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">NC</span>Nova Comercial, Lda</span><span class="mono">+258 84 213 5567</span><span>1 activo</span><span class="tag progress">Recorrente</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">CF</span>Casa Fortuna</span><span class="mono">+258 86 772 4410</span><span>1 activo</span><span class="tag pending">Novo</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">CE</span>Comercial Etana, Lda</span><span class="mono">+258 82 904 3312</span><span>1 activo</span><span class="tag progress">Recorrente</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">GV</span>Grupo Vale</span><span class="mono">+258 87 331 9284</span><span>1 activo</span><span class="tag progress">Recorrente</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">FC</span>Farmácia Central</span><span class="mono">+258 84 556 7721</span><span>1 activo</span><span class="tag pending">Novo</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">CM</span>Casa Muendo</span><span class="mono">+258 86 120 4489</span><span>0 activos</span><span class="tag done">Concluído</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">APR</span>Auto Peças Rovuma</span><span class="mono">+258 82 667 3301</span><span>0 activos</span><span class="tag done">Concluído</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">CM</span>Carlos Macuácua</span><span class="mono">+258 87 445 2290</span><span>1 activo</span><span class="tag progress">Viatura</span></div>
+            <div class="client-row"><span class="cn"><span class="mini-avatar">IV</span>Inês Variege</span><span class="mono">+258 84 998 1123</span><span>1 activo</span><span class="tag progress">Viatura</span></div>
+          </div>
+        </div>
+
+        <div class="admin-view" id="view-documentos" style="display:none;">
+          <div class="notes-card">
+            <div class="divider-note" style="margin-top:0;"><span class="label">Documentos recentes</span><div class="line"></div></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Factura Comercial</span><span>Comercial Etana, Lda</span><span class="mono">Nº 0417/26</span><span class="tag done">Verificado</span></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Guia de Remessa</span><span>Nova Comercial, Lda</span><span class="mono">Nº 0392/26</span><span class="tag pending">Pendente</span></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Bill of Lading (B/L)</span><span>Grupo Vale</span><span class="mono">Nº 0388/26</span><span class="tag done">Verificado</span></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Certificado de Origem</span><span>Farmácia Central</span><span class="mono">Nº 0409/26</span><span class="tag pending">Pendente</span></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Comprovativo de Compra — BeForward</span><span>Carlos Macuácua</span><span class="mono">Nº 0430/26</span><span class="tag done">Verificado</span></div>
+            <div class="doc-row"><span class="doc-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Registo INATER</span><span>Inês Variege</span><span class="mono">Nº 0433/26</span><span class="tag progress">Em análise</span></div>
+          </div>
+        </div>
+
+        <div class="admin-view" id="view-relatorios" style="display:none;">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">Processos activos</div></div>
+            <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Concluídos este mês</div></div>
+            <div class="stat-card"><div class="stat-num">6 dias</div><div class="stat-label">Tempo médio de despacho</div></div>
+            <div class="stat-card"><div class="stat-num">9</div><div class="stat-label">Clientes activos</div></div>
+          </div>
+          <div class="notes-card" style="margin-top:18px;">
+            <div class="divider-note" style="margin-top:0;"><span class="label">Processos por estado</span><div class="line"></div></div>
+            <div class="bar-row"><span class="bar-label">Documentação pendente</span><div class="bar-track"><div class="bar-fill" style="width:22%;"></div></div><span class="bar-val">2</span></div>
+            <div class="bar-row"><span class="bar-label">Em alfândega</span><div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div><span class="bar-val">3</span></div>
+            <div class="bar-row"><span class="bar-label">Importação de viaturas</span><div class="bar-track"><div class="bar-fill" style="width:22%;"></div></div><span class="bar-val">2</span></div>
+            <div class="bar-row"><span class="bar-label">Concluído</span><div class="bar-track"><div class="bar-fill" style="width:22%;"></div></div><span class="bar-val">2</span></div>
+          </div>
+        </div>
+
+        <div class="admin-view" id="view-admin" style="display:none;"></div>
+        <div class="admin-view" id="view-definicoes" style="display:none;">
+          <div class="notes-card">
+            <div class="divider-note" style="margin-top:0;"><span class="label">Perfil da empresa</span><div class="line"></div></div>
+            <div class="settings-row"><span>Nome</span><span>AJ Serviços, Lda.</span></div>
+            <div class="settings-row"><span>NUIT</span><span class="mono">401125701</span></div>
+            <div class="settings-row"><span>Morada</span><span>Lichinga, Niassa</span></div>
+            <div class="settings-row"><span>WhatsApp principal</span><span class="mono">+258 86 568 6897</span></div>
+            <div class="settings-row"><span>Email</span><span>ajaduaneira@gmail.com</span></div>
+          </div>
+          <div class="notes-card" style="margin-top:18px;">
+            <div class="divider-note" style="margin-top:0;"><span class="label">Notificações</span><div class="line"></div></div>
+            <div class="settings-row"><span>Novo pedido de cotação por email</span><span class="switch on" onclick="this.classList.toggle('on')"></span></div>
+            <div class="settings-row"><span>Novo pedido de cotação por WhatsApp</span><span class="switch on" onclick="this.classList.toggle('on')"></span></div>
+            <div class="settings-row"><span>Resumo semanal de processos</span><span class="switch" onclick="this.classList.toggle('on')"></span></div>
+          </div>
+        </div>
+      </div>
+      <footer class="note">Painel interno — acesso reservado à equipa</footer>
+    </main>
+  </div>
+</div>
+
+<script src="js/site.js"></script>
+
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/pm.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin-site.js"></script>
+<script src="js/account-menu.js"></script>
+
+<script src="js/account-panel.js"></script>
+<script src="js/nav-auth.js"></script>
+<script src="js/video.js"></script>
+<script src="js/restore.js"></script>
+<script src="js/ux.js"></script>
+</body>
+</html>
