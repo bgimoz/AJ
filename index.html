@@ -946,8 +946,10 @@ document.addEventListener("aj:login",e=>{
       if(digits(tel).length<9)return er.textContent="Indique um telefone válido.";
       const b=G("pfOk");b.disabled=true;b.textContent="A guardar…";
       try{
-        const r=await sb.rpc("atualizar_perfil",{p_nome:nome,p_telefone:tel});if(r.error)throw r.error;
         const r2=await sb.auth.updateUser({data:{nome,telefone:tel,empresa:emp,perfil_ok:true}});if(r2.error)throw r2.error;
+        let r=await sb.rpc("completar_perfil",{p_nome:nome,p_telefone:tel});
+        if(r.error){r=await sb.from("profiles").update({nome,telefone:tel}).eq("id",u.id);if(r.error)r=await sb.from("profiles").update({nome}).eq("id",u.id)}
+        if(r.error)console.warn("Perfil: corra o supabase_setup.sql para guardar o nome na tabela profiles.",r.error.message);
         try{const p=JSON.parse(localStorage.getItem("aj_prof")||"null");if(p){p.nome=nome;localStorage.setItem("aj_prof",JSON.stringify(p))}}catch(x){}
         if(window.AJ_ME){AJ_ME.nome=nome;document.dispatchEvent(new CustomEvent("aj:login",{detail:AJ_ME}))}
         const hi=G("cvHi");if(hi)hi.textContent="Olá, "+nome.split(" ")[0];
