@@ -1,0 +1,103 @@
+/* ==========================================================================
+   17-client-timeline.css  (17 de 18)
+   Linha do tempo de fases na área do cliente (.trk).
+   Não reordenar: a ordem de carga (ver README.md) faz parte da cascata,
+   por isso os ficheiros seguintes podem substituir regras dos anteriores.
+   ========================================================================== */
+
+/* ===== Painel do cliente: linha do tempo com bolinhas ===== */
+
+.trk {
+  position: relative;
+  height: 58px;
+  margin: 30px 40px 14px;
+}
+
+.trk-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--ink-10);
+}
+
+.trk-line i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg,var(--amber),#4c8a64);
+  transition: width .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.trk-s {
+  position: absolute;
+  top: 0;
+  width: 90px;
+  margin-left: -45px;
+  text-align: center;
+}
+
+.trk-s b {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--ink-20);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.trk-s span {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--graphite);
+  line-height: 1.25;
+}
+
+.trk-s.ok b {
+  background: #4c8a64;
+  border-color: #4c8a64;
+}
+
+.trk-s.ok span {
+  color: var(--ink);
+}
+
+.trk-s.cur b {
+  border-color: var(--amber);
+  background: var(--paper);
+  box-shadow: 0 0 0 5px var(--amber-10);
+  animation: trkPulse 2s ease-in-out infinite;
+}
+
+.trk-s.cur span {
+  color: var(--amber);
+}
+
+@keyframes trkPulse {
+  50% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+@media(max-width:420px) {
+  .trk {
+    margin-inline: 30px;
+  }
+  .trk-s {
+    width: 74px;
+    margin-left: -37px;
+  }
+  .trk-s span {
+    font-size: 11px;
+  }
+}

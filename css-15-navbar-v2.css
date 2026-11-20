@@ -1,0 +1,113 @@
+/* ==========================================================================
+   15-navbar-v2.css  (15 de 18)
+   Barra de navegação v2 (versão limpa) e menu hambúrguer.
+   Não reordenar: a ordem de carga (ver README.md) faz parte da cascata,
+   por isso os ficheiros seguintes podem substituir regras dos anteriores.
+   ========================================================================== */
+
+/* ===== NAVBAR v2 (limpa) ===== */
+
+header {
+  transform: none!important;
+}
+
+header .nav.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 16px;
+  min-height: 64px;
+  padding: 10px clamp(16px,4vw,28px);
+}
+
+header .brand {
+  flex: 0 0 auto;
+  min-width: 0;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: clamp(14px,4vw,17px)!important;
+}
+
+header .brand-mark {
+  width: 40px!important;
+  height: 40px!important;
+}
+
+.navlinks {
+  display: none;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: clamp(16px,2vw,28px);
+  min-width: 0;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.nav-right {
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.nav-right>a.btn-glass,
+.na-signup,
+#themeBtn {
+  display: none!important;
+}
+
+.na-login .l-long {
+  display: none;
+}
+
+.na-login .l-short {
+  display: inline;
+}
+
+#menuBtn {
+  display: inline-flex;
+}
+
+@media(min-width:640px) {
+  #themeBtn {
+    display: inline-flex!important;
+  }
+  .na-login .l-long {
+    display: inline;
+  }
+  .na-login .l-short {
+    display: none;
+  }
+}
+
+@media(min-width:720px) {
+  .nav-right>a.btn-glass {
+    display: inline-flex!important;
+  }
+}
+
+@media(min-width:1100px) {
+  .navlinks {
+    display: flex;
+  }
+  #menuBtn {
+    display: none;
+  }
+}
+
+/* Menu hamburguer (folha inferior) */
+
+#navSheet .nsb {
+  height: auto;
+}
+
+@media(min-width:640px) {
+  #navSheet .nsb {
+    left: 50%;
+    right: auto;
+    width: min(460px,100%);
+    transform: translate(-50%,100%);
+  }
+  #navSheet.on .nsb {
+    transform: translate(-50%,0);
+  }
+}

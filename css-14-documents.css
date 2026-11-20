@@ -1,0 +1,115 @@
+/* ==========================================================================
+   14-documents.css  (14 de 18)
+   Vista de documentos do painel (.dq*, .doc-row).
+   Não reordenar: a ordem de carga (ver README.md) faz parte da cascata,
+   por isso os ficheiros seguintes podem substituir regras dos anteriores.
+   ========================================================================== */
+
+.dq {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dq input[type=search] {
+  flex: 1 1 200px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--ink-20);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.dq-f {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+  padding-bottom: 2px;
+}
+
+.dq-f button {
+  white-space: nowrap;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 99px;
+  border: 1px solid var(--ink-20);
+  background: none;
+  color: var(--ink);
+  font: 600 13px Inter Tight,sans-serif;
+  cursor: pointer;
+}
+
+.dq-f button.on {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.doc-row[role=button] {
+  cursor: pointer;
+}
+
+.doc-row[role=button]:hover {
+  background: var(--ink-10);
+}
+
+.dq-s {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  min-height: 32px;
+  padding: 0 6px;
+}
+
+.dq-h,
+.dq-e {
+  font-size: 13px;
+  color: var(--graphite);
+  margin-top: 12px;
+}
+
+#dqD {
+  border: 0;
+  border-radius: 18px;
+  padding: 22px;
+  width: min(440px,92vw);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+#dqD::backdrop {
+  background: #00000080;
+}
+
+#dqD label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+#dqD input,
+#dqD select,
+#dqD textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ink-20);
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px Inter Tight,sans-serif;
+}
+
+.dq-b {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}

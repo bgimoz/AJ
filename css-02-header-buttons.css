@@ -1,0 +1,246 @@
+/* ==========================================================================
+   02-header-buttons.css  (2 de 18)
+   Cabeçalho, logótipo, ligações de navegação, painel de definições e botões base.
+   Não reordenar: a ordem de carga (ver README.md) faz parte da cascata,
+   por isso os ficheiros seguintes podem substituir regras dos anteriores.
+   ========================================================================== */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid var(--ink-10);
+  transition: var(--transition-theme);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -.01em;
+}
+
+@media(min-width:640px) {
+  .brand {
+    font-size: 18px;
+  }
+}
+
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: IBM Plex Mono,monospace;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  overflow: hidden;
+  object-fit: cover;
+  display: inline-block;
+}
+
+img.brand-mark {
+  border: 1.5px solid var(--ink);
+}
+
+.navlinks {
+  display: none;
+  gap: 28px;
+  font-size: 14px;
+  color: var(--graphite);
+}
+
+@media(min-width:860px) {
+  .navlinks {
+    display: flex;
+  }
+}
+
+.navlinks a {
+  text-decoration: none;
+  transition: color .15s;
+  position: relative;
+}
+
+.navlinks a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background: var(--amber);
+  transition: width .2s;
+}
+
+.navlinks a:hover {
+  color: var(--ink);
+}
+
+.navlinks a:hover:after {
+  width: 100%;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: transform .3s,border-color .3s;
+  color: var(--ink);
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--amber-glow);
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.settings-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 186px;
+  padding: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 44px #0b26302e;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .2s,transform .2s,visibility .2s;
+}
+
+.settings-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: IBM Plex Mono,monospace;
+}
+
+.settings-row:hover {
+  background: var(--ink-10);
+}
+
+.settings-row svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.settings-row .row-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.btn {
+  font-family: IBM Plex Mono,monospace;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s;
+}
+
+@media(min-width:640px) {
+  .btn {
+    padding: 13px 24px;
+  }
+}
+
+.btn-solid {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 6px 18px #0b263038,inset 0 1px #ffffff1f;
+  border: 1px solid var(--ink);
+  position: relative;
+}
+
+.btn-solid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px #0b26304d,inset 0 1px #ffffff2e;
+}
+
+.btn-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  color: var(--ink);
+  box-shadow: 0 8px 22px #0b26301a;
+  position: relative;
+}
+
+.btn-glass:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px #0b263029;
+  border-color: var(--amber-glow);
+}
+
+.btn-round {
+  border-radius: 100px;
+}
+
+.btn-square {
+  border-radius: 6px;
+}

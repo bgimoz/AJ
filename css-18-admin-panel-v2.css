@@ -1,0 +1,549 @@
+/* ==========================================================================
+   18-admin-panel-v2.css  (18 de 18)
+   Painel interno v2: separadores, processos, perfil Google, menu de colunas, fases personalizáveis, definições e administração.
+   Não reordenar: a ordem de carga (ver README.md) faz parte da cascata,
+   por isso os ficheiros seguintes podem substituir regras dos anteriores.
+   ========================================================================== */
+
+/* ===== Painel interno ===== */
+
+.sb-item .nb,
+#aTabs .nb {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 99px;
+  background: #c83c3c;
+  color: #fff;
+  font: 700 11px/20px IBM Plex Mono,monospace;
+  font-style: normal;
+  text-align: center;
+}
+
+#aTabs button {
+  position: relative;
+}
+
+#aTabs .nb {
+  position: absolute;
+  top: 2px;
+  left: calc(50% + 6px);
+  margin: 0;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  font-size: 10px;
+  line-height: 16px;
+}
+
+#pm .ch .dot {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 3px transparent;
+  transition: box-shadow .15s;
+}
+
+#pm .ch .dot:hover {
+  box-shadow: 0 0 0 3px var(--ink-10);
+}
+
+.pd {
+  background: var(--paper);
+  border: 1px solid var(--ink-10);
+  border-left: 4px solid var(--amber);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.pd.conv {
+  border-left-color: #4c8a64;
+}
+
+.pd.trat {
+  border-left-color: var(--ink-20);
+  opacity: .85;
+}
+
+.pd-h {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.pd-h b {
+  font-size: 16px;
+}
+
+.pd-h small {
+  margin-left: auto;
+  color: var(--graphite);
+  font: 11.5px IBM Plex Mono,monospace;
+}
+
+.pd-st {
+  font: 600 10.5px IBM Plex Mono,monospace;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: var(--amber-10);
+  color: var(--amber);
+}
+
+.pd-st.conv {
+  background: #4c8a6422;
+  color: #4c8a64;
+}
+
+.pd-st.trat {
+  background: var(--ink-10);
+  color: var(--graphite);
+}
+
+.pd-g {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  font-size: 14px;
+}
+
+@media(min-width:620px) {
+  .pd-g {
+    grid-template-columns: repeat(4,1fr);
+  }
+}
+
+.pd-g label {
+  display: block;
+  font: 10.5px IBM Plex Mono,monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--graphite);
+  margin-bottom: 2px;
+}
+
+.pd-g div {
+  word-break: break-word;
+}
+
+.pd-m {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--ink-10);
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.pd-a {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.pd-a .btn2 {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pd-a .btn2.pri {
+  background: var(--amber);
+  color: #fff;
+  border-color: var(--amber);
+}
+
+#view-clientes .client-row .inc {
+  margin-left: 8px;
+  font: 600 10px IBM Plex Mono,monospace;
+  font-style: normal;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #c8873c26;
+  color: #c8873c;
+  white-space: nowrap;
+}
+
+#view-clientes .client-row small {
+  display: block;
+  color: var(--graphite);
+  font-size: 11.5px;
+}
+
+#pmDr .cpick select {
+  width: 100%;
+}
+
+/* ===== Completar perfil (Google) ===== */
+
+#pfM {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: #0b2630b3;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow: auto;
+}
+
+.pf-box {
+  width: min(440px,100%);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 30px 80px #0006;
+}
+
+.pf-ic {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--amber-10);
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+}
+
+.pf-ic svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pf-box h2 {
+  font-size: 22px;
+  letter-spacing: -.01em;
+  margin-bottom: 6px;
+}
+
+.pf-box p {
+  font-size: 14px;
+  color: var(--graphite);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.pf-box label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.pf-box label small {
+  font-weight: 400;
+  color: var(--graphite);
+}
+
+.pf-box input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 13px;
+  border-radius: 10px;
+  border: 1.5px solid var(--ink-20);
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px Inter Tight,sans-serif;
+}
+
+.pf-box input:focus {
+  outline: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-10);
+}
+
+.pf-box input[readonly] {
+  background: var(--ink-10);
+  color: var(--graphite);
+}
+
+.pf-box .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.pf-box #pfOut {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--graphite);
+}
+
+/* 4 etapas ocupam toda a largura em ecrãs largos */
+
+@media(min-width:1000px) {
+  #pm .cl {
+    flex: 1 1 240px;
+    min-width: 240px;
+    max-width: 340px;
+  }
+  #pm .cl:has(>.ghost:only-child) {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+}
+
+/* botões da vista de Pedidos */
+
+#view-pedidos .tabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--ink-10);
+}
+
+#view-pedidos .tabs button {
+  border: 0;
+  background: none;
+  color: var(--graphite);
+  font: 600 13px Inter Tight,sans-serif;
+  padding: 8px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+#view-pedidos .tabs button.on {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 2px 8px #0000001a;
+}
+
+.pd-a .btn2 {
+  border: 1.5px solid var(--ink-20);
+  background: var(--paper);
+  color: var(--ink);
+  font: 600 13px Inter Tight,sans-serif;
+  padding: 9px 16px;
+  border-radius: 99px;
+  cursor: pointer;
+  min-height: 40px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pd-a .btn2:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.pd-a .btn2.pri {
+  background: var(--amber);
+  color: #fff;
+  border-color: var(--amber);
+}
+
+.pd-a .btn2.pri:hover {
+  filter: brightness(.93);
+  color: #fff;
+}
+
+/* barra inferior do painel com 7 separadores */
+
+#aTabs button {
+  padding-inline: 1px;
+  min-width: 0;
+}
+
+#aTabs button span {
+  font-size: 9.5px;
+  letter-spacing: -.02em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* menu de opções da coluna */
+
+#colMenu {
+  position: fixed;
+  z-index: 950;
+  width: 244px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink-10);
+  box-shadow: 0 18px 50px #0b263040;
+}
+
+#colMenu label {
+  display: block;
+  font: 11px IBM Plex Mono,monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--graphite);
+}
+
+#colMenu input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 11px;
+  border: 1.5px solid var(--ink-20);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px Inter Tight,sans-serif;
+}
+
+#colMenu input:focus {
+  outline: none;
+  border-color: var(--amber);
+}
+
+.cm-sw {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.cm-sw button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 1.5px var(--ink-20);
+  cursor: pointer;
+  padding: 0;
+}
+
+.cm-sw button.on {
+  box-shadow: 0 0 0 2.5px var(--ink);
+}
+
+.cm-del {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid #c83c3c55;
+  background: none;
+  color: #c83c3c;
+  font: 600 13px Inter Tight,sans-serif;
+  cursor: pointer;
+}
+
+.cm-del:hover {
+  background: #c83c3c14;
+}
+
+/* ===== Fases personalizáveis ===== */
+
+.phn {
+  font-size: 12px;
+  color: var(--graphite);
+  margin: 0 0 8px;
+  line-height: 1.45;
+}
+
+#pmPh .ph,
+.ph.add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+#pmDr .ph input[type=text] {
+  flex: 1;
+  min-width: 0;
+}
+
+.phd {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid var(--ink-20);
+  background: var(--paper);
+  cursor: pointer;
+  flex: none;
+  padding: 0;
+}
+
+.ph.ok .phd {
+  background: #4c8a64;
+  border-color: #4c8a64;
+}
+
+.ph.cur .phd {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-10);
+}
+
+.ph .ib[disabled] {
+  opacity: .3;
+  cursor: default;
+}
+
+/* linha do cliente com qualquer numero de fases */
+
+.trk-s {
+  --w: min(calc(100% / var(--m,3)),110px);
+  width: var(--w);
+  margin-left: calc(var(--w) / -2);
+}
+
+.trk.many {
+  height: 76px;
+}
+
+.trk.many {
+  margin-inline: 22px;
+}
+
+.trk.many .trk-s span {
+  font-size: 10.5px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Definições + Administração */
+
+#sbnav-admin,
+#aTabs [data-k=admin] {
+  display: none!important;
+}
+
+#defTabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--ink-10);
+  margin-bottom: 16px;
+}
+
+#defTabs button {
+  border: 0;
+  background: none;
+  color: var(--graphite);
+  font: 600 13px Inter Tight,sans-serif;
+  padding: 8px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+#defTabs button.on {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 2px 8px #0000001a;
+}
